@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="grass" tilewidth="64" tileheight="64">
+  <image source="tilesets/64p/8bit_set/grass.png" width="512" height="640"/>
+ </tileset>
+ <tileset firstgid="81" name="blocks_diffuse" tilewidth="64" tileheight="64">
+  <properties>
+   <property name="shaderable" value="blocks_normal"/>
+  </properties>
+  <image source="tilesets/shaderTextures/blocks_diffuse.png" width="640" height="640"/>
+ </tileset>
+ <layer name="$bgShaderable" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt10OyYFEAwNC/xd+2bdu2bdvdC+ys4lWqcgeZnQ1kdmZmZg7NpXk0nxbQQlpEi2kJzQ43iVtKy2g5raCVtIpW0xpaS+uGm8ytpw20kTbRZtpCW2kbbacdw03mdtIu2k17aC/to/10gA7SoeEmc4fpCB2lY3ScTtBJOkWn6cxwk7mzdI7O0wW6SJfoMl2hq3RtuMncdbpBN+kW3aY7dJfu0X16MNxk7iE9osf0hJ7SM3pOL+glvRpuMvea3tBbekfv6QN9pE/0mb4MN5n7St/oO/2gn/SLftMf+kv/hpvM2X+15uy/WnP2X605+6/WnP1Xa87+qzVn/9Was/9qzdl/tebsv1pz9l+tOfuv1pz9V2vO/qs1Z//VmrP/as3Zf7Xm7L9ac/ZfrTn7r9ac/Vdrzv6rNWf/1Zqz/2rN2X+15uy/WnP2X605+6/WnP1Xa87+qzVn/9Was/9qzdl/tebsv1pz9l+tOfuv1pz9V2vO/qs1Z//VmrP/as3Zf7Xm7L9ac/ZfrTn7r9ac/Vdrzv6rNWf/1Zqz/2rN2X+15uy/WnP2X605+6/WnP1Xa87+qzVn/9Was/9qzdl/tebsv1pz9l+tOfuv1pz9V2vO/qs1Z//VmrP/as3Zf7Xm7L9ac/ZfrTn7r9ac/Vdrzv6rNWf/1Zqz/2rN2X+15uy/WnP2X605+6/WnP1Xa87+qzVn/9Was/9qzdl/tebsv1pz9l+tOfuv1pz9V2vO/qs1Z//VmrP/as3Zf7Xm7L9ac/8BbIDqxg==
+  </data>
+ </layer>
+ <layer name="$c.$fgCollisionLayer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3TEKwzAMQNGsaaY2U5v73zMa7KWUuBiDIH4PPloVD1qzLAAAAAAAAADASGv0iLYyW205a07jGb2ivcxWe86a03hHn+gos9WRsyb8rd78ntz/8erN78n9H6/e/J7cfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALiX9aJZ/vV59QYZ/Xr37J2yv//bCfZZCfc=
+  </data>
+ </layer>
+</map>

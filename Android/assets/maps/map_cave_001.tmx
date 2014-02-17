@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="128" height="64" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="example_plattformer_tileset_003" tilewidth="32" tileheight="32">
+  <image source="tilesets/example_plattformer_tileset_003.png" trans="ff00ff" width="32" height="128"/>
+  <tile id="1">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="spawn" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="tileset_solid" tilewidth="32" tileheight="32">
+  <image source="tilesets/tileset_solid.png" trans="ff00ff" width="512" height="2048"/>
+  <tile id="425">
+   <properties>
+    <property name="spawn" value="true"/>
+   </properties>
+  </tile>
+  <tile id="448">
+   <properties>
+    <property name="destroyable" value=""/>
+   </properties>
+  </tile>
+  <tile id="449">
+   <properties>
+    <property name="destroyable" value=""/>
+   </properties>
+  </tile>
+  <tile id="464">
+   <properties>
+    <property name="destroyable" value=""/>
+   </properties>
+  </tile>
+  <tile id="465">
+   <properties>
+    <property name="destroyable" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="$c.solid_layer" width="128" height="64">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer name="subject_layer" width="128" height="64">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7Ad+NeMiJHwtAqaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfmOwAAAABUFr9wAAU=
+  </data>
+ </layer>
+ <objectgroup draworder="topdown" name="saw" width="128" height="64" visible="0">
+  <object type="saw" x="448" y="512" width="224" height="224"/>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="moving_platform" width="128" height="64" visible="0">
+  <object type="moving_platform" x="1088" y="1600" width="128" height="32">
+   <properties>
+    <property name="p1" value="24,53"/>
+    <property name="p2" value="34,50"/>
+   </properties>
+  </object>
+  <object type="moving_platform" x="1856" y="1216" width="96" height="32">
+   <properties>
+    <property name="p1" value="58,38"/>
+    <property name="p2" value="37,38"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff3434" draworder="topdown" name="trap_layer" width="128" height="64" visible="0">
+  <object type="pendulum" x="512" y="1568" width="256" height="256"/>
+  <object x="832" y="1856" width="224" height="96"/>
+  <object x="1728" y="2016"/>
+  <object x="1792" y="2016"/>
+ </objectgroup>
+</map>

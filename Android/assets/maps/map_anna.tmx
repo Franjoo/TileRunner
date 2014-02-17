@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="128" height="64" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="part2_tileset" tilewidth="32" tileheight="32">
+  <image source="tilesets/part2_tileset.png" width="384" height="320"/>
+ </tileset>
+ <tileset firstgid="121" name="pubdlKJKcnt.php" tilewidth="32" tileheight="32">
+  <image source="tilesets/pubdlKJKcnt.php.png" width="2048" height="2048"/>
+ </tileset>
+ <layer name="$cKachelebene 1" width="128" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt2klKA0EUh/HqVZ/CIc6XMnHWjZqo11AiOKycxxtlFefpGP7BhSBKI1TR9XjfDz4SCAnV3XReOnQIAAAAAAAAAAAAAJC3I3WsTtSpOlPn6kJdqit1rW7UbT1LREJ9dafu1YN6VE/qWb2oV/Wm3tVHPUtEQgNFCINqSA2rhhpRo2pMjasJNammirpXi9imdUybqqVm1KyaK5gL3jEXfGMu+PbXXJhXC2pRLalltcLxBwAAAAAAAAAAQE2s39dQtX7r25ea9fsaqtZvfftSs35fQ9X6rW9fatbva6hav/Xti4U56Btz0DfmoG/MQR+Y874x531jzvtmcc5vlyHslF/Pu3rcLb9f29PzfXWgDsvf3w8fehx/ABFwneQb10m+pb5O4vslb6mvk/h+yVvq85P/YfKW+vy0+D+MJ5yfvlk7P/k9GZe1/cnvybis7U/mVVzW9qe1eZU79qdv1uY/4rI2/xGXtfnvxWrE1tS6aquO2lCbaiv8f/63f3yOd5+AxUci
+  </data>
+ </layer>
+ <layer name="$cKachelebene 2" width="128" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt0UtOFFEYhuHqUa1CEEFxU6CAgpsRhcShN65isxVMGAAjFJSL2C7CL6GTri5MatCkevI8yZuTOv8Z1MkpCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANr2Pn1IH9On9Dltpe3a3kbarMx20m760vYPc69O0/f0I52l83SRLmt7P9OvyuwqXaffbf8w9+pBpygm0mR6mKbSTHpc23uUpiuzJ2k2Pe2M+wa8LotiNb0pb7/Xsq6Xg/m7cvjM23JwZi7vN5+epedpIb1IL2t7i2mpMltOK+mV9x+7g7zjt8p7H5bD86Py7pn/Oc78pOEMAOOzl7726zasTXX77bd6A0Zxk/706zWsTfX6/W31BoziH0PvU1k=
+  </data>
+ </layer>
+ <layer name="Kachelebene 3" width="128" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt3G1qwkAUheE7gQiNK+nXRtpN5K/92EiyiVmKfww0bqr3mowdhkKF2oTOvA8cYqHK4JlbE7GKAAAAAAAAAAAAAADw/w0i+4Nm7XVgGdp3+6HHEPovi3bdaudy4+i/RNq1hP4tjVt7RQAAAAAAAAAAAAAA5Kd24g8i3o6XxH537TXjejba6aCd2vGSDPSftWH6vNY52nm79pqwHPu8Xpya/gEAQGHsendYexFYDde7AAAAAIAShf/nf6rEN5rRie806c8bJ/va8T0PudFO7TMD0s3p3bQX0v75no88hf7HaA/Ee6Fj/rMW+tdZP+2BMdoL/XSb+c9Y9Pp/2gMhtgeOUf/Mf57C/Fv/cWwPbCvmP3dh/pu59+dqes2PbzP/+UrnP3Suf/t9H4X5z1Pcv3Ufzvm5/i9DfP5n/R+nawH6L0Q6/9vq+/d/6D9P6fzP8RbdC+fzAPpf1q32cKe51zxUf/e4Yf5/Es7/0vs/XnFt+LLT5/VF86p5u+Jz/NvHTe//Xnj/n7B6pco=
+  </data>
+ </layer>
+</map>
