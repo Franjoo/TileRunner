@@ -3,6 +3,7 @@ package com.tilerunner.camera;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.tilerunner.gameobjects.player.IPlayable;
 import com.tilerunner.gameobjects.player.Player;
 
 /**
@@ -18,8 +19,8 @@ public class CameraManager {
     private boolean useShared;
 
     // player
-    private Player p1;
-    private Player p2;
+    private IPlayable p1;
+    private IPlayable p2;
     private Vector2 distance;
 
     // cameras

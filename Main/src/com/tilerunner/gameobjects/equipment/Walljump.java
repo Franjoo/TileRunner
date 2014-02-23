@@ -2,6 +2,7 @@ package com.tilerunner.gameobjects.equipment;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilerunner.gameobjects.player.Player;
+import com.tilerunner.input.IGameInput;
 import com.tilerunner.input.IGameInputController;
 
 /**
@@ -25,8 +26,8 @@ public class Walljump extends Equipment {
 
         vX = 0;
 
-        IGameInputController input = player.getInputController();
-        if (input != null && input.get_isA()) {
+        IGameInput input = player.getInputController();
+        if (input != null && input.isA()) {
 
             if (player.hit_left) {
                vX = vX_Max;

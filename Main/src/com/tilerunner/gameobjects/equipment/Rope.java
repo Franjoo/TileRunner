@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.tilerunner.core.C;
+import com.tilerunner.gameobjects.player.IPlayable;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.Detector;
+import com.tilerunner.input.IGameInput;
 import com.tilerunner.input.IGameInputController;
 
 /**
@@ -18,7 +20,7 @@ import com.tilerunner.input.IGameInputController;
  */
 public class Rope extends Equipment {
 
-    private Player player;
+    private IPlayable player;
     private TextureRegion region;
 
     private Texture texture_point;
@@ -45,7 +47,7 @@ public class Rope extends Equipment {
     private Vector2 anchor;
 
     private Detector detector;
-    IGameInputController input;
+    IGameInput input;
 
     public Rope(Player player) {
         this.player = player;
@@ -86,15 +88,15 @@ public class Rope extends Equipment {
 
         input = player.getInputController();
 
-        if (input != null && input.get_isB() && !isShooting) {
+        if (input != null && input.isB() && !isShooting) {
             isShooting = true;
             isAttached = false;
             direction.set(1, 0);
 
-            if (player.get_vX() == 0) {
+            if (player.getVx() == 0) {
                 direction.setAngle(90);
             } else {
-                direction.setAngle(player.get_vX() / Math.abs(player.get_vX()) * -45 + 90);
+                direction.setAngle(player.getVx() / Math.abs(player.getVx()) * -45 + 90);
             }
             direction.nor();
 
@@ -105,7 +107,7 @@ public class Rope extends Equipment {
 //            findAnchor();
         }
 
-        if (input != null && input.get_isY()) {
+        if (input != null && input.isX()) {
             isShooting = false;
             isAttached = false;
             p_vY = 0;
@@ -114,8 +116,8 @@ public class Rope extends Equipment {
         }
 
         if (isAttached) {
-            p_vX = -player.get_vX();
-            p_vY = -player.get_vY();
+            p_vX = -player.getVx();
+            p_vY = -player.getVx();
         }
 
         updateRope(deltaTime);
@@ -140,7 +142,8 @@ public class Rope extends Equipment {
 
         updatePlayerAttachment(deltaTime);
 
-        origin.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2);
+        origin.set(player.getX(), player.getY());
+//        origin.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2);
 
 
         direction.set(position.x - origin.x, position.y - origin.y);
@@ -166,7 +169,7 @@ public class Rope extends Equipment {
     }
 
     private void updatePlayerAttachment(float deltaTime) {
-        h = position.y - player.getY() - player.getHeight();
+//        h = position.y - player.getY() - player.getHeight();
         float v = (float) Math.sqrt(2 * -C.GRAVITY * h);
 
 //        float vX =
@@ -183,8 +186,8 @@ public class Rope extends Equipment {
 
                 _d.setAngle(rotation + 90);
                 System.out.println(_d);
-                p_vX = -player.get_vX();
-                p_vY = -player.get_vY();
+//                p_vX = -player.get_vX();
+//                p_vY = -player.get_vY();
                 velocity.x += _d.x * v * deltaTime;
                 velocity.y += -_d.y * v * deltaTime;
 

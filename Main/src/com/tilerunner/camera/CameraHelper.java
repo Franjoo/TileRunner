@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.tilerunner.gameobjects.GameObject;
-
-import javax.imageio.ImageTypeSpecifier;
+import com.tilerunner.gameobjects.player.IPlayable;
 
 public class CameraHelper {
     public static final String TAG = CameraHelper.class.getSimpleName();
@@ -25,8 +23,8 @@ public class CameraHelper {
     private float y;
 
     private float zoom;
-    private GameObject target;
-    private GameObject[] targets;
+    private IPlayable target;
+    private IPlayable[] targets;
 
     public float deltaX;
     public float deltaY;
@@ -43,7 +41,7 @@ public class CameraHelper {
 //        position = new Vector2(0, 0);
         zoom = 2.6f;
 
-        targets = new GameObject[2];
+        targets = new IPlayable[2];
     }
 
 
@@ -149,7 +147,7 @@ public class CameraHelper {
         return zoom;
     }
 
-    public void setTarget(GameObject target) {
+    public void setTarget(IPlayable target) {
 //        this.target = target;
         targets[0] = target;
         targets[1] = null;
@@ -158,14 +156,14 @@ public class CameraHelper {
         y = target.getY();
     }
 
-    public void setTargets(GameObject t1, GameObject t2) {
+    public void setTargets(IPlayable t1, IPlayable t2) {
         targets[0] = t1;
         targets[1] = t2;
         distance = new Vector2(t2.getX() - t1.getX(), t2.getY() - t1.getY());
     }
 
 
-    public GameObject getTarget() {
+    public IPlayable getTarget() {
         return target;
     }
 

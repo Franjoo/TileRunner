@@ -16,6 +16,7 @@ public class PlayScreen extends AbstractScreen {
     public static final String SINGLEPLAYER = "singleplayer";
     public static final String MULTIPLAYER = "multiplayer";
     public static final String PLAYMODE = SINGLEPLAYER;
+//    public static final String PLAYMODE = MULTIPLAYER;
 
     private PlayController playController;
     private PlayRenderer playRenderer;

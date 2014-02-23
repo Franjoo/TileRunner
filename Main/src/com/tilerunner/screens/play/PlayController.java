@@ -2,18 +2,17 @@ package com.tilerunner.screens.play;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import com.tilerunner.camera.CameraManager;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.World;
-import com.tilerunner.input.IGameInputController;
+import com.tilerunner.input.IGameInput;
 import com.tilerunner.input.KeyboardInput;
-import com.tilerunner.input.gamepads._X360Gamepad;
+import com.tilerunner.input.gamepads.X360Gamepad;
 import com.tilerunner.ui.PlayUI;
-import com.tilerunner.ui.PlayerUI;
 
 /**
  * represents a class which is responsible for the camera_1 of the gameplay and for
@@ -24,8 +23,8 @@ public class PlayController {
 
     private boolean singleplayer;
 
-    private final World world;
-    private final Player p1;
+    private World world;
+    private Player p1;
     private Player p2;
 
     // ui
@@ -37,33 +36,30 @@ public class PlayController {
      * creates an new PlayController
      */
     public PlayController() {
+        init();
+    }
 
+    private void init() {
 
-        singleplayer = PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER;
-        // push test
 
         //**** SINGLEPLAYER
-        if (singleplayer) {
+        if (PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER) {
             world = new World(this);
             p1 = new Player(world, 1);
 
-            // input
-            IGameInputController input_p1 = null;
+            IGameInput input = null;
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
 
                 // xbox 360 controller
                 Array<Controller> controllers = Controllers.getControllers();
-                try{
-                    if (controllers != null)
-                        input_p1 = new _X360Gamepad(controllers.get(0));
-                    else input_p1 = new KeyboardInput(p1);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+                if (controllers.size == 0) input = new KeyboardInput();
 
+                    // keyboard
+                else input = new X360Gamepad(controllers.get(0));
             }
 
-            p1.setInputController(input_p1);
+
+            p1.setInputController(input);
 
             cameraManager = new CameraManager(p1, null);
 
@@ -76,38 +72,36 @@ public class PlayController {
             playUI = new PlayUI();
 
 
+//        //**** MULTIPLAYER
+//        else {
+//            world = new World(this);
+//            p1 = new Player(world, 1);
+//            p2 = new Player(world, 2);
+//
+//            // input
+//            IGameInputController input_p1 = null;
+//            IGameInputController input_p2 = null;
+//            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+//
+//                // xbox 360 controller
+//                Array<Controller> controllers = Controllers.getControllers();
+//                if (controllers.get(0) != null) input_p1 = new _X360Gamepad(controllers.get(0));
+//                if (controllers.get(1) != null) input_p2 = new _X360Gamepad(controllers.get(1));
+//            }
+//
+//            p1.setInputController(input_p1);
+//            p2.setInputController(input_p2);
+//
+//            cameraManager = new CameraManager(p1, p2);
+//
+//            world.setPlayers(p1, p2);
+//            world.createEnemies();
+//            world.createRenderer(PlayScreen.getInstance().getBatch());
+//        }
         }
-
-
-        //**** MULTIPLAYER
-        else {
-            world = new World(this);
-            p1 = new Player(world, 1);
-            p2 = new Player(world, 2);
-
-            // input
-            IGameInputController input_p1 = null;
-            IGameInputController input_p2 = null;
-            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-
-                // xbox 360 controller
-                Array<Controller> controllers = Controllers.getControllers();
-                if (controllers.get(0) != null) input_p1 = new _X360Gamepad(controllers.get(0));
-                if (controllers.get(1) != null) input_p2 = new _X360Gamepad(controllers.get(1));
-            }
-
-            p1.setInputController(input_p1);
-            p2.setInputController(input_p2);
-
-            cameraManager = new CameraManager(p1, p2);
-
-            world.setPlayers(p1, p2);
-            world.createEnemies();
-            world.createRenderer(PlayScreen.getInstance().getBatch());
-        }
-
 
     }
+
 
     /**
      * updates the objects used in PlayScreen
@@ -116,9 +110,14 @@ public class PlayController {
      */
     public void update(float deltaTime) {
 
-        if (singleplayer) {
+        if (PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER) {
+            p1.getInputController().poll();
             p1.update(deltaTime);
+
         } else {
+            p1.getInputController().poll();
+            p2.getInputController().poll();
+
             // update players
             p1.update(deltaTime);
             p2.update(deltaTime);
@@ -138,12 +137,21 @@ public class PlayController {
         // decorations
         world.updateDecorations(deltaTime);
 
+        // coins
+        world.getCoins().update(deltaTime);
+
         // update cameraManager
         cameraManager.update(deltaTime);
 
         // update playUI
-        playUI.update(deltaTime);
+//        playUI.update(deltaTime);
+
+        // DEBUGGING
+        if (Gdx.input.isKeyPressed(Input.Keys.F7)) {
+            init();
+        }
     }
+
 
     /**
      * returns the world in which the game is taking place
@@ -152,7 +160,7 @@ public class PlayController {
         return world;
     }
 
-    public PlayUI getPlayUI(){
+    public PlayUI getPlayUI() {
         return playUI;
     }
 

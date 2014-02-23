@@ -33,11 +33,11 @@ public class TestStarter {
 //        new LwjglApplication(new LightTest(), cfg);
 //        new LwjglApplication(new B2DLightTest(), cfg);
 //        new LwjglApplication(new ShaderTest(), cfg);
-//        new LwjglApplication(new RopeTest(), cfg);
+        new LwjglApplication(new RopeTest(), cfg);
 //        new LwjglApplication(new SplatterTest(), cfg);
 //        new LwjglApplication(new ControllerTest(), cfg);
 //        new LwjglApplication(new PoolingTest(), cfg);
-        new LwjglApplication(new TestEnvironment(), cfg);
+//        new LwjglApplication(new TestEnvironment(), cfg);
 
 
 

@@ -116,7 +116,11 @@ public class PlayRenderer {
         // decorations
         playController.getWorld().renderDecorations(batch);
 
-        playController.getPlayUI().render();
+        // coins
+        playController.getWorld().getCoins().render(batch);
+
+
+//        playController.getPlayUI().render();
 
 //        batch.flush();
 //

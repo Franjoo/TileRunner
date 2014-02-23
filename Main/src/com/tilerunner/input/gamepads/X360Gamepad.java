@@ -2,9 +2,10 @@ package com.tilerunner.input.gamepads;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.PovDirection;
+import com.tilerunner.input.IGameInput;
 
 
-public class X360Gamepad implements IX360Gamepad {
+public class X360Gamepad implements IX360Gamepad, IGameInput {
 
     /* * * * I D E N T I F I E R * * * */
     private static final int BTN_A = 0;
@@ -222,4 +223,28 @@ public class X360Gamepad implements IX360Gamepad {
         stickRightDeadZone = value;
     }
 
+    @Override
+    public float stickX() {
+        return get_LS_X();
+    }
+
+    @Override
+    public float stickY() {
+        return get_LS_Y();
+    }
+
+    @Override
+    public boolean isA() {
+        return is_A();
+    }
+
+    @Override
+    public boolean isB() {
+        return is_B();
+    }
+
+    @Override
+    public boolean isX() {
+        return is_X();
+    }
 }

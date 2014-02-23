@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.tilerunner.gameobjects.player.IPlayable;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.Detector;
+import com.tilerunner.input.IGameInput;
 import com.tilerunner.input.IGameInputController;
 import test.particlesystem.TintedParticle;
 
@@ -18,8 +20,8 @@ import test.particlesystem.TintedParticle;
  */
 public class Jetpack extends Equipment {
 
-    private final Player player;
-    private final IGameInputController input;
+    private final IPlayable player;
+    private final IGameInput input;
 
     // fire effect
     private final float ppu = 10;
@@ -76,10 +78,10 @@ public class Jetpack extends Equipment {
     @Override
     public void update(float deltaTime) {
 
-        IGameInputController i = player.getInputController();
+        IGameInput i = player.getInputController();
 
 //        if (i != null && i.get_trigger_left() != 0) {
-        if (i != null && i.get_isB()) {
+        if (i != null && i.isB()) {
             vY += aY * deltaTime;
 
             // emmit particles
@@ -96,7 +98,7 @@ public class Jetpack extends Equipment {
                 fireParticles.add(tp);
             }
 
-            if (player.vY > vY_MAX) player.vY = vY_MAX;
+//            if (player.getVy() > vY_MAX) player.setvYvY_MAX;
         } else vY = 0;
 
         for (int j = 0; j < fireParticles.size; j++) {

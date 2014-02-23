@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="400" height="300" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="ts_runner" tilewidth="64" tileheight="64">
+  <image source="tilesets/ts_runner.png" width="1024" height="1024"/>
+  <tile id="3">
+   <properties>
+    <property name="step" value="16 0"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="step" value="16 8"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="step" value="8 0"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="step" value="16 12"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="step" value="12 8"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="step" value="8 4"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="step" value="4 0"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="step" value="16 14"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="step" value="14 12"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="step" value="12 10"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="step" value="10 8"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="step" value="8 6"/>
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="step" value="6 4"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="step" value="4 2"/>
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="step" value="2 0"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="$c$gl" width="400" height="300">
+  <data encoding="base64" compression="zlib">
+   eJzt3W1O20AUBdCpCrR0N/2kP7u0LIWldGkdhJCQSYodz3jes8+RRkLkg4d/3MskjikFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABY6sOFBcBYl/I58wKgv9FZr0cAchqd8fokB8cRmBqd6fojB8cRmFqTx59K+fO5rvu6vtS1/fR5ZO+1bPMC/ekL5tAfwJS+YA79AUzpC+bQH8DUSybclvI4eBQC0x/A1Esm3OmPi+pe7FT3ZKe6NzvVPdrpzOt8pd5W7p/vu0v6A5iy93hr2hcfy/xzDJ7um7FPnAcNLGXvsa4v9tYn+gOY64h50LMv9tAn+gOY4wh5MLIvsvaJ/gDes8dMiNwX2fpEfwCX7CEPMvdFhj7RH8A5GfNgz32RoU8AnmToj1590UKr57328foEGKVntl5ry/3F3ugTYCsRMnTE61FHoU+AXiJk6bQvWjl6d5yjT4BWIuTpVvmerT+22EPpE+Bac3Podymnh7p+1fWzrh91fa/rW11fz1xTsH6v1NtKvU+p9y31MaU+tjw8P9ebGbbaH2Tqj//Zy+8B5NX7fQbvTfThuAGjje4KOQiQ0+iu0B8AOY3uCv0BkNPortAfADlFy+to85zz3v+zjboAWoqWK6PmuUnUAzoEiCBapryXf70+6zY61/UHkE20TFmah1t/dvqulL+3dY3uAd0BjBYtV9ZmZPZrcdy86qb69WOvn3NNp+gh4LVoedD6b+7sfdKL/gDWipYHXsOJyzEEXouWB/ojFscQuCRaHuiPsRxDYK5oeaA/AHKIlqmt5rm5cI5tdBlnBo4pWka1nOVch0Rm3wRkEi2bWs8z7ZDI9AeQSbRs6jFPlhzWH0Am0bJJf6zvj2uvDwywRLTcOGJ/rD1/rNX15AGWiJYbrebpmZGtziWOtgCWiJYbLefRH/oD6CdabvSYp3c+tnp+2Q5kEi2bos0zh4wHjihS7mXN4axzA6wRKfcizbKE/gCOKFLuRZplLt0BHFWk7Is0y1z6AziqSNkXaZY5nB8FHNnozxxkPk8148wAjKU7APbHfgmAa+gOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIjpHxvxOwA=
+  </data>
+ </layer>
+ <objectgroup draworder="topdown" name="Coins Mix" width="400" height="300">
+  <properties>
+   <property name="coins" value=""/>
+  </properties>
+  <object type="yellow" x="1056" y="8352"/>
+  <object type="red" x="2368" y="8144"/>
+  <object type="blue" x="2320" y="8240"/>
+  <object type="white" x="2208" y="8256"/>
+  <object type="red" x="2224" y="8336"/>
+  <object type="yellow" x="1184" y="8352"/>
+  <object type="yellow" x="1312" y="8352"/>
+  <object type="yellow" x="1440" y="8352"/>
+  <object type="yellow" x="1568" y="8352"/>
+  <object type="yellow" x="1696" y="8352"/>
+  <object type="white" x="992" y="8352"/>
+  <object type="white" x="992" y="8416"/>
+  <object type="white" x="1056" y="8416"/>
+  <object type="white" x="1120" y="8416"/>
+  <object type="white" x="1120" y="8352"/>
+  <object type="white" x="1120" y="8288"/>
+  <object type="white" x="1056" y="8288"/>
+  <object type="white" x="992" y="8288"/>
+  <object type="white" x="1184" y="8288"/>
+  <object type="white" x="1248" y="8288"/>
+  <object type="white" x="1312" y="8288"/>
+  <object type="white" x="1376" y="8288"/>
+  <object type="white" x="1440" y="8288"/>
+  <object type="white" x="1504" y="8288"/>
+  <object type="white" x="1568" y="8288"/>
+  <object type="white" x="1632" y="8288"/>
+  <object type="white" x="1696" y="8288"/>
+  <object type="white" x="1696" y="8416"/>
+  <object type="white" x="1632" y="8416"/>
+  <object type="white" x="1568" y="8416"/>
+  <object type="white" x="1504" y="8416"/>
+  <object type="white" x="1440" y="8416"/>
+  <object type="white" x="1376" y="8416"/>
+  <object type="white" x="1312" y="8416"/>
+  <object type="white" x="1248" y="8416"/>
+  <object type="white" x="1184" y="8416"/>
+  <object type="white" x="1248" y="8352"/>
+  <object type="blue" x="1120" y="8160"/>
+  <object type="blue" x="1248" y="8160"/>
+  <object type="blue" x="1376" y="8160"/>
+  <object type="blue" x="1504" y="8160"/>
+  <object type="blue" x="1632" y="8160"/>
+  <object type="white" x="1760" y="8288"/>
+  <object type="white" x="1760" y="8352"/>
+  <object type="white" x="1760" y="8416"/>
+  <object type="white" x="1632" y="8352"/>
+  <object type="white" x="1504" y="8352"/>
+  <object type="white" x="1376" y="8352"/>
+  <object type="blue" x="480" y="7840"/>
+ </objectgroup>
+</map>

@@ -1,6 +1,7 @@
 package com.tilerunner.gameobjects.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.tilerunner.gameobjects.collectibles.Coins;
 import com.tilerunner.gameobjects.decorations.Decoration;
 import com.tilerunner.gameobjects.decorations.Torch;
 import com.tilerunner.gameobjects.enemies.Drone;
@@ -45,6 +47,10 @@ import java.util.Iterator;
  */
 
 public class World {
+
+    // static finals
+    public static final int STEP = 4;
+    public static final int TILESIZE = 64;
 
     private Detector detector;
     private Pathfinder pathfinder;
@@ -95,6 +101,9 @@ public class World {
     // decorations
     private Array<Decoration> decorations;
 
+    // coins
+    private Coins coins;
+
 
     // test
     private Bomb bomb;
@@ -105,7 +114,8 @@ public class World {
         this.playController = playController;
 
         // load tmx map
-        map = new TmxMapLoader().load("maps/map_arena.tmx");
+        map = new TmxMapLoader().load("maps/playground.tmx");
+//        map = new TmxMapLoader().load("maps/playground.tmx");
 
         // create collision detector
         Detector.initialize(map);
@@ -128,6 +138,9 @@ public class World {
         createTraps();
 
         createDecorations();
+
+        // create coins
+        coins = new Coins(map,this);
 
 
         // create shaders
@@ -581,7 +594,7 @@ public class World {
         batch.begin();
         renderer.setView(playController.getCameraManager().getCamera_shared());
 //        renderer.render(new int[]{map.getLayers().getCount() - 1});
-        renderer.renderTileLayer(ghostLayer);
+//        renderer.renderTileLayer(ghostLayer);
         batch.end();
     }
 
@@ -668,6 +681,10 @@ public class World {
         return enemies;
     }
 
+    public Coins getCoins(){
+        return coins;
+    }
+
 
     public class Pools {
 
@@ -684,6 +701,7 @@ public class World {
         }
 
         public void update(float delta) {
+
         }
 
         public void render(SpriteBatch batch) {

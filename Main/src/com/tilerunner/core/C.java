@@ -20,5 +20,5 @@ public class C {
      */
     public static final float EPSILON = 0.001f;
 
-    public static final float GRAVITY = -100f;
+    public static final float GRAVITY = -80f;
 }

@@ -1,0 +1,74 @@
+coins_white.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+coin
+  rotate: false
+  xy: 48, 44
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 6
+coin
+  rotate: false
+  xy: 48, 2
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 8
+coin
+  rotate: false
+  xy: 2, 44
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 7
+coin
+  rotate: false
+  xy: 48, 128
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 2
+coin
+  rotate: false
+  xy: 2, 2
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 9
+coin
+  rotate: false
+  xy: 48, 86
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 4
+coin
+  rotate: false
+  xy: 2, 128
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 3
+coin
+  rotate: false
+  xy: 2, 86
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 5
+coin
+  rotate: false
+  xy: 2, 212
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 0
+coin
+  rotate: false
+  xy: 2, 170
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: 1

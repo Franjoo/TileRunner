@@ -28,6 +28,7 @@ public final class Detector {
     private boolean[][] solids;
     private int[][] energies;
     private boolean[][] destructible;
+    private Step[][] steps;
 
 
     // map lists
@@ -58,9 +59,54 @@ public final class Detector {
             for (int h = 0; h < solids[w].length; h++) {
                 for (int i = 0; i < collisionTileLayers.size; i++) {
                     TiledMapTileLayer.Cell cell = collisionTileLayers.get(i).getCell(w, h);
-                    solids[w][h] = cell != null;
+                    solids[w][h] = cell != null && !cell.getTile().getProperties().containsKey("step");
                 }
             }
+        }
+
+        // fill steps array
+        try {
+            steps = new Step[numTilesX][numTilesY];
+            for (int w = 0; w < solids.length; w++) {
+                for (int h = 0; h < solids[w].length; h++) {
+                    for (int i = 0; i < collisionTileLayers.size; i++) {
+
+                        TiledMapTileLayer.Cell cell = collisionTileLayers.get(i).getCell(w, h);
+
+                        if (cell != null) {
+
+                            MapProperties p = cell.getTile().getProperties();
+                            if (p.containsKey("step")) {
+
+                                int y1 = Integer.parseInt(p.get("step").toString().split(" ")[0]);
+                                int y2 = Integer.parseInt(p.get("step").toString().split(" ")[1]);
+                                int rotation = cell.getRotation();
+                                boolean flipHorizontally = cell.getFlipHorizontally();
+                                boolean flipVertically = cell.getFlipVertically();
+
+                                assert rotation == 0;
+                                assert flipVertically;
+
+                                // flip y's
+                                if (flipHorizontally) {
+                                    int _y1 = y1;
+                                    y1 = y2;
+                                    y2 = _y1;
+                                }
+
+                                steps[w][h] = new Step(y1, y2);
+
+                                System.out.println(steps[w][h]);
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("failed to fill steps array at ");
+            e.printStackTrace();
         }
 
 
@@ -81,7 +127,6 @@ public final class Detector {
                 }
             }
         }
-
 
 
     }
@@ -123,6 +168,14 @@ public final class Detector {
         return energies[(int) (x) / tileWidth][(int) (y) / tileHeight];
     }
 
+    public Step getStep(final int x, final int y) {
+        return steps[x][y];
+    }
+
+    public Step getStep(final float x, final float y) {
+        return steps[(int) (x) / tileWidth][(int) (y) / tileHeight];
+    }
+
     protected void setEnergy(int x, int y, final int energy) {
         energies[x][y] = energy;
     }
@@ -157,8 +210,27 @@ public final class Detector {
         new Detector(tiledMap);
     }
 
-    public boolean[][] getSolids(){
+    public boolean[][] getSolids() {
         return solids;
+    }
+
+    public static class Step {
+
+        public int y1;
+        public int y2;
+        public float m;
+
+        public Step(final int y1,final int y2) {
+            this.y1 = y1;
+            this.y2 = y2;
+
+            m = ((float) (this.y2 - this.y1) * World.STEP) / World.TILESIZE;
+        }
+
+        @Override
+        public String toString() {
+            return ("step [" + this.y1 + "] [" + this.y2 + "] [" + m + "]");
+        }
     }
 
 

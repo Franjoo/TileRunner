@@ -2,21 +2,14 @@ package com.tilerunner.gameobjects.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.tilerunner.gameobjects.GameObject;
-import com.tilerunner.gameobjects.equipment.Jetpack;
-import com.tilerunner.gameobjects.weapons.GrenadeLauncher;
-import com.tilerunner.gameobjects.weapons.MachineGun;
+import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.AnimationStateData;
+import com.esotericsoftware.spine.Bone;
 import com.tilerunner.gameobjects.world.Detector;
 import com.tilerunner.core.C;
-import com.tilerunner.gameobjects.equipment.Equipment;
-import com.tilerunner.gameobjects.weapons.Weapon;
 import com.tilerunner.gameobjects.world.World;
-import com.tilerunner.input.IGameInputController;
+import com.tilerunner.input.IGameInput;
 
 /**
  * User: Franjo
@@ -24,10 +17,9 @@ import com.tilerunner.input.IGameInputController;
  * Time: 13:25
  * Project: TileRunner
  */
-public class Player extends GameObject {
+public class Player extends Creature implements IPlayable {
 
     private final int id;
-
 
     // collision
     private Detector detector;
@@ -36,50 +28,45 @@ public class Player extends GameObject {
     public boolean hit_left;
     public boolean hit_right;
 
+    // animation
+    private AnimationState state;
+
     // sounds
     private Sound sndJump;
 
-
-    private final float aJ = 250;
-
-    // equipment
-    private Equipment eq;
+    private final float aJ = 100;
 
 
-    private Texture playerTexture;
-    private Texture crosshairTexture;
-
-    private Weapon weapon;
-    private Vector2 dir_enemy;
-    private Vector2 dir_stick;
-    private float range = 1200;
-    private float aim_tolerance = 0.02f;
-
-
-    private IGameInputController input;
+    private IGameInput input;
     private World world;
-    private boolean isFixed;
-    private boolean wasR1Pressed;
 
-    public Player(World world, int id) {
+    public Player(String name, String path, String skin, float scale, World world, int id) {
+        super(name, path, skin, scale);
+
         this.world = world;
         this.id = id;
+
 
         init();
     }
 
+    public Player(World world, int id) {
+        this("skeleton", "spine/lego_runner/", "blau", 0.8f, world, id);
+
+
+    }
+
+
     private void init() {
 
         // position
-        this.x = 1280;
-        this.y = 640;
-//        this.x = 192;
-//        this.y = 4608;
+        this.x = 640;
+        this.y = 10600;
         // dimension
-//        this.width = 100;
-//        this.height = 150;
-        this.width = 64;
-        this.height = 64;
+//        this.width = 64;
+//        this.height = 64;
+        this.width = 0;
+        this.height = 0;
         // velocity
         this.vX = 0;
         this.vY = 0;
@@ -87,54 +74,42 @@ public class Player extends GameObject {
         this.aX = 75f;
         this.aY = 0;
         // friction
-        this.frictionX = 0.94f;
+//        this.frictionX = 0.94f;
+        this.frictionX = 0f;
         this.frictionY = 0;
         // limits
-        this.vX_Max = 12;
-        this.vX_Min = -12;
+        this.vX_Max = 15;
+        this.vX_Min = -15;
         this.vY_Max = 40;
         this.vY_Min = -40;
 
-
-        // draw rectangular shape
-        Pixmap pixmap = new Pixmap((int) (width), (int) (height), Pixmap.Format.RGBA8888);
-        playerTexture = new Texture(pixmap.getWidth(), pixmap.getHeight(), Pixmap.Format.RGBA8888);
-
-        // player playerTexture
-        pixmap.setColor(1, 1, 1, 1);
-        pixmap.fillRectangle(0, 0, (int) width, (int) height);
-        pixmap.setColor(1, 1, 0, 1);
-        pixmap.drawLine((int) x, (int) y, (int) x + 20, (int) y);
-        pixmap.drawLine((int) x, (int) y, (int) (x), (int) height + 20);
-        playerTexture.draw(pixmap, 0, 0);
-
-        // crosshair
-        Pixmap pCrosshair = new Pixmap(8, 8, Pixmap.Format.RGBA8888);
-        crosshairTexture = new Texture(pCrosshair.getWidth(), pCrosshair.getHeight(), Pixmap.Format.RGBA8888);
-        pCrosshair.setColor(1, 0, 0, 1);
-        pCrosshair.fillCircle(4, 4, 4);
-        crosshairTexture.draw(pCrosshair, 0, 0);
-
-        Rectangle r = new Rectangle();
-
-
+        // detector
         detector = Detector.getInstance();
 
-        // weapon
-        weapon = new MachineGun(world);
-//        weapon = new GrenadeLauncher(world);
-//        weapon = new FlameThrower(world);
-        weapon.applyTo(this);
-        dir_enemy = new Vector2();
-        dir_stick = new Vector2();
-
-        // equipment
-        eq = new Jetpack(this);
-//        eq = new Rope(this);
-//        eq = new Walljump(this);
-
-
         createSounds();
+
+        setupAnimationStates();
+
+    }
+
+    private void setupAnimationStates() {
+        AnimationStateData stateData = new AnimationStateData(skeletonData); // Defines mixing (crossfading) between animations.
+        // walk
+        stateData.setMix("walk", "idle", 0.2f);
+        stateData.setMix("walk", "jump", 0.2f);
+        // jump
+        stateData.setMix("jump", "land", 0.2f);
+        // land
+        stateData.setMix("land", "walk", 0.2f);
+        stateData.setMix("land", "idle", 0.2f);
+        //idle
+        stateData.setMix("idle", "walk", 0.2f);
+        stateData.setMix("idle", "jump", 0.2f);
+
+
+        state = new AnimationState(stateData);
+        state.setAnimation(0, "idle", true);
+        state.setTimeScale(1.6f);
 
     }
 
@@ -146,195 +121,130 @@ public class Player extends GameObject {
 
     @Override
     public void update(float delta) {
+        super.update(delta);
 
-
-
-        if(wasR1Pressed && !input.is_R1_pressed()){
-            isFixed = !isFixed;
-        }
+        vX = input.stickX() * vX_Max;
 
 //        vX *= frictionX;
-
-        if (!isFixed) {
-            vX += input.get_left_stickX() * aX * delta;
-        }
-
-        vX *= frictionX;
-//        vY += aY *delta;
-
-
-//        vX += input.get_left_stickX() * vX_Max * delta;
         vY += C.GRAVITY * delta;
 
 
-        // jump
-        if (hit_bottom && input.get_isA()) {
-//            sndJump.loop();
+        // additional jump height
+        if (current().equals("jump") && vY >= 0 && input.isA()) {
+            vY += 0.7;
+        }
+
+        // jump start
+        if (hit_bottom && input.isA()) {
+            state.setAnimation(0, "jump", false);
+            state.addAnimation(0, "land", false, 0);
             sndJump.play();
-            vY += aJ;
+            vY += 23;
         }
 
 
-        // equipment
-        eq.update(delta);
-//        aX *= eq.get_aX();
-//        aY *= eq.get_aY();
-        vX += eq.getvX();
-        vY += eq.getvY();
+//        if (current().equals("jump")){
+//            state.setTimeScale(0.8f);
+//        }else state.setTimeScale(1.6f);
 
 
-        // weapon
-        updateWeapon(delta);
+//        if (vY == 0 && Math.abs(vX) <= 0.5) {
+//            state.setAnimation(0, "idle", true);
+//        }
 
 
+        // set to limits
         if (vY > vY_Max) vY = vY_Max;
         else if (vY < vY_Min) vY = vY_Min;
         if (vX > vX_Max) vX = vX_Max;
         else if (vX < vX_Min) vX = vX_Min;
         if (Math.abs(vX) < 0.02) vX = 0;
 
-
-//        System.out.println(vY);
-
+        // set position
         x += vX;
         y += vY;
 
-        setCollisionPosition();
 
-        wasR1Pressed = input.is_R1_pressed();
-    }
+        // A N I M A T I O N
 
-    private void updateWeapon(float delta) {
-//        // helper variables
-//        int nearest = Integer.MAX_VALUE;
-//        double cos_min = Double.MAX_VALUE;
-//        Enemy e;
-//        float dist;
-//        double cos;
+        if (state.getCurrent(0) == null) state.setAnimation(0, "idle", true);
+        assert state.getCurrent(0).getAnimation() != null;
+
+
+        skeleton.setFlipX(vX < 0);
+
+        if (Math.abs(input.stickX()) >= 0.5f && !state.getCurrent(0).getAnimation().getName().equals("jump")) {
+            if (!state.getCurrent(0).getAnimation().getName().equals("walk")) {
+                state.setAnimation(0, "walk", true);
+            }
+
 //
-        // set stick vector
-        dir_stick.set(input.get_left_stickX(), input.get_left_stickY());
-        if (input.get_isX()) {
-            weapon.shoot(dir_stick.x, dir_stick.y);
+//            if (!state.getCurrent(0).getAnimation().getName().equals("walk")) {
+//                state.addAnimation(0, "walk", false, 0);
+////                state.getCurrent(0).setNext();
+//            }
+//
+
+        } else if (!state.getCurrent(0).getAnimation().getName().equals("idle")) {
+            state.addAnimation(0, "idle", true, 0);
         }
-        weapon.update(delta);
-
-
-//        dir_stick.nor();
-//
-//        Array<Enemy> enemies = world.getEnemies();
-//
-//        if (enemies.size != 0) {
-//
-//            // find nearest to aiming direction
-//            for (int i = 0; i < world.getEnemies().size; i++) {
-//                e = world.getEnemies().get(i);
-//                dir_enemy.set(e.getX() - x, e.getY() - y);
-//                dir_enemy.nor();
-//
-//                cos = dir_enemy.dot(dir_stick);
-//                if (Math.abs(cos - 1) < cos_min) {
-//                    cos_min = Math.abs(cos - 1);
-//                    nearest = i;
-//                }
-//
-//            }
-//
-//            // get nearest enemy
-//            e = world.getEnemies().get(nearest);
-//            dir_enemy.set(e.getX() - x, e.getY() - y);
-//            dist = dir_enemy.len();
-//            dir_enemy.nor();
-//
-//            cos = (dir_enemy.dot(dir_stick));
-//
-//            // apply auto aiming
-//            if (input.get_trigger_right() != 0) {
-//                if (dist <= range && cos > 1 - aim_tolerance && cos < 1 + aim_tolerance)
-//                    weapon.shoot(dir_enemy.x, dir_enemy.y);
-//                else weapon.shoot(dir_stick.x, dir_stick.y);
-//            }
+//            state.clearTracks();
+//            state.setAnimation(0,"walk",false);
+//            state.setAnimation(0,"walk",true);
+//            skeletonData.findAnimation("walk").apply(skeleton, skeleton.getTime(), skeleton.getTime() + delta, true, null);
+//            skeleton.update(delta);
 //        } else {
-//            if (input.get_trigger_right() != 0) {
-//                weapon.shoot(dir_stick.x, dir_stick.y);
-//            }
+//            state.setAnimation(0, "idle", true);
 //        }
 
-        // update weapon
+        state.update(delta);
+        state.apply(skeleton);
+
+//        System.out.println(x + " "  + y );
+
+        setCollisionPosition();
+
+//        getSkeletonBounds().update(skeleton,true);
 
     }
 
-    private void setCollisionPosition() {
+    private String current() {
+        return state.getCurrent(0).getAnimation().getName();
+    }
 
-        hit_left = false;
-        hit_right = false;
-        hit_top = false;
-        hit_bottom = false;
 
-        // left
-        if (vX < 0) {
-            if (detector.isSolid(x, y - vY) || detector.isSolid(x, y + height - vY)) {
-                x = (int) (x / world.tileWidth) * world.tileWidth + world.tileWidth + C.EPSILON;
-                hit_left = true;
-                vX = 0;
-            }
-        }
-        // right
-        else if (vX > 0) {
-            if (detector.isSolid(x + width, y - vY) || detector.isSolid(x + width, y + height - vY)) {
-                x = (int) (x / world.tileWidth) * world.tileWidth - C.EPSILON;
-                hit_right = true;
-                vX = 0;
-            }
-        }
+    @Override
+    public void render(SpriteBatch batch) {
+        super.render(batch);
 
-        // bottom
-        if (vY < 0) {
-            if (detector.isSolid(x - vX, y) || detector.isSolid(x + width - vX, y)) {
-                y = (int) (y / world.tileHeight) * world.tileHeight + world.tileHeight + C.EPSILON;
-                hit_bottom = true;
-                vY = 0;
-            }
-        }
-        // top
-        else if (vY > 0) {
-            if (detector.isSolid(x - vX, y + height) || detector.isSolid(x + width - vX, y + height)) {
-                y = (int) (y / world.tileHeight) * world.tileHeight - C.EPSILON;
-                hit_top = true;
-                vY = 0;
-            }
-        }
 
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-        batch.begin();
-        batch.draw(playerTexture, x, y);
-        if (dir_stick.len() >= 0.5) {
-            batch.draw(crosshairTexture, x + width / 2 + dir_stick.x * 150, y + height / 2 + dir_stick.y * 150);
-
-        }
-
-
-//        if (Math.abs(input.get_left_stickX()) >= 0.5f && Math.abs(input.get_left_stickY()) >= 0.5f) {
-//            batch.draw(crosshairTexture, x + width / 2 + input.get_left_stickX() * 75, y + height / 2 + input.get_left_stickY() * 75);
-//        }
-        batch.end();
-
-
-        // weapon
-        weapon.render(batch);
-
-        // equipment
-        eq.render(batch);
+    public float getX() {
+        return x;
     }
 
-    public void setInputController(IGameInputController input) {
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public float getVx() {
+        return vX;
+    }
+
+    @Override
+    public float getVy() {
+        return vY;
+    }
+
+    public void setInputController(IGameInput input) {
         this.input = input;
     }
 
-    public IGameInputController getInputController() {
+    public IGameInput getInputController() {
         return input;
     }
 
@@ -344,5 +254,115 @@ public class Player extends GameObject {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public Bone getBone(String name) {
+        return skeleton.findBone(name);
+    }
+
+    private void setCollisionPosition() {
+
+        // todo ruckeln in solid to step
+
+        hit_left = false;
+        hit_right = false;
+        hit_top = false;
+        hit_bottom = false;
+
+        // left
+        if (vX < 0) {
+
+            // solid to step
+            if (detector.getStep(x, y + 2) != null && detector.getStep(x, y) == null) {
+                y += 2;
+
+                System.out.println("solid to step left");
+            }
+
+            // step to solid
+            else if (detector.getStep(x - vX, y) != null && detector.isSolid(x, y) && !detector.isSolid(x, y + 2)) {
+                y += 2;
+
+                System.out.println("step to solid left");
+
+            }
+
+            // solid
+            else if (detector.isSolid(x, y - vY) || detector.isSolid(x, y + height - vY)) {
+
+                x = (int) (x / world.tileWidth) * world.tileWidth + world.tileWidth + C.EPSILON;
+                hit_left = true;
+                vX = 0;
+
+            }
+        }
+        // right
+        else if (vX > 0) {
+
+            // solid to step
+            if (detector.getStep(x, y + 2) != null && detector.getStep(x, y) == null) {
+                y += 2;
+
+                System.out.println("solid to step right");
+
+            }
+
+            // step to solid
+            else if (detector.getStep(x - vX, y) != null && detector.isSolid(x, y) && !detector.isSolid(x, y + 2)) {
+                y += 2;
+
+                System.out.println("step to solid right");
+            }
+
+            // solid
+            else if ((detector.isSolid(x + width, y - vY) || detector.isSolid(x + width, y + height - vY))) {
+
+                x = (int) (x / world.tileWidth) * world.tileWidth - C.EPSILON;
+                hit_right = true;
+                vX = 0;
+
+            }
+        }
+
+        // bottom
+        if (vY < 0) {
+
+            // step
+            Detector.Step step = detector.getStep(x, y);
+            if (step != null) {
+
+                float _y = y % 64.0f;
+                float _x = x % 64.0f;
+
+                if (_y <= step.m * _x + step.y1 * World.STEP) {
+
+                    y = (int) (y / world.tileHeight) * world.tileHeight + (step.m * _x + step.y1 * World.STEP) + C.EPSILON;
+
+                    hit_bottom = true;
+                    vY = 0;
+
+                }
+
+            } else if (detector.isSolid(x - vX, y) || detector.isSolid(x + width - vX, y)) {
+                y = (int) (y / world.tileHeight) * world.tileHeight + world.tileHeight + C.EPSILON;
+                hit_bottom = true;
+                vY = 0;
+            }
+        }
+        // top
+        else if (vY > 0) {
+
+            // step
+            if (detector.getStep(x - vX, y + height) != null || detector.getStep(x + width - vX, y + height) == null) {
+//                y += 2;
+            } else if (detector.isSolid(x - vX, y + height) || detector.isSolid(x + width - vX, y + height)) {
+                y = (int) (y / world.tileHeight) * world.tileHeight - C.EPSILON;
+                hit_top = true;
+                vY = 0;
+
+                System.out.println("top");
+            }
+        }
+
     }
 }

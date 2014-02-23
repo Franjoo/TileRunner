@@ -1,6 +1,7 @@
 package com.tilerunner.gameobjects.weapons;
 
 import com.tilerunner.gameobjects.GameObject;
+import com.tilerunner.gameobjects.player.IPlayable;
 
 /**
  * User: Franjo
@@ -8,7 +9,7 @@ import com.tilerunner.gameobjects.GameObject;
  * Time: 16:44
  * Project: TileRunner
  */
-public abstract class Weapon extends GameObject{
+public abstract class Weapon extends GameObject {
 
     public abstract void shoot(float x, float y);
 

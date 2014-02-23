@@ -1,153 +1,81 @@
 package com.tilerunner.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
-import com.tilerunner.gameobjects.player.Player;
 
 /**
+ * Created with IntelliJ IDEA.
  * User: Franjo
- * Date: 26.10.13
- * Time: 10:47
- * Project: Main
+ * Date: 23.02.14
+ * Time: 19:22
  */
-public class KeyboardInput extends InputAdapter implements IGameInputController {
+public class KeyboardInput implements IGameInput {
 
-    private Player player;
-    private OrthographicCamera camera;
-    private Vector2 vec_stick_rightX;
-    private Vector2 vec_stick_rightY;
+    public final int LEFT;
+    public final int RIGHT;
+    public final int UP;
+    public final int DOWN;
+    public final int A;
+    public final int B;
+    public final int X;
 
-    public KeyboardInput(Player player) {
-        this.player = player;
-//        this.camera = camera;
 
-        vec_stick_rightX = new Vector2();
-        vec_stick_rightY = new Vector2();
+    public KeyboardInput() {
+        LEFT = Keys.LEFT;
+        RIGHT = Keys.RIGHT;
+        UP = Keys.UP;
+        DOWN = Keys.DOWN;
 
-        Gdx.input.setInputProcessor(this);
+        A = Keys.A;
+        B = Keys.B;
+        X = Keys.X;
     }
 
+    public KeyboardInput(int LEFT, int RIGHT, int UP, int DOWN, int A, int B, int X) {
+        this.LEFT = LEFT;
+        this.RIGHT = RIGHT;
+        this.UP = UP;
+        this.DOWN = DOWN;
+
+        this.A = A;
+        this.B = B;
+        this.X = X;
+    }
+
+
     @Override
-    public float get_left_stickX() {
-        if (Gdx.input.isKeyPressed(Keys.LEFT) && Gdx.input.isKeyPressed(Keys.RIGHT)) return 0;
-        else if (Gdx.input.isKeyPressed(Keys.LEFT)) return -1;
-        else if (Gdx.input.isKeyPressed(Keys.RIGHT)) return 1;
+    public float stickX() {
+        if (Gdx.input.isKeyPressed(LEFT) && Gdx.input.isKeyPressed(RIGHT)) return 0;
+        else if (Gdx.input.isKeyPressed(LEFT)) return -1;
+        else if (Gdx.input.isKeyPressed(RIGHT)) return 1;
         return 0;
     }
 
     @Override
-    public float get_left_stickY() {
-        if (Gdx.input.isKeyPressed(Keys.UP) && Gdx.input.isKeyPressed(Keys.DOWN)) return 0;
-        else if (Gdx.input.isKeyPressed(Keys.UP)) return 1;
-        else if (Gdx.input.isKeyPressed(Keys.DOWN)) return -1;
+    public float stickY() {
+        if (Gdx.input.isKeyPressed(UP) && Gdx.input.isKeyPressed(DOWN)) return 0;
+        else if (Gdx.input.isKeyPressed(UP)) return -1;
+        else if (Gdx.input.isKeyPressed(DOWN)) return 1;
         return 0;
     }
 
     @Override
-    public float get_right_stickX() {
-
-        float relMouseX = Gdx.input.getX() + player.getY();
-
-//        System.out.println("Camera: " + camera.position.x + "  " + player.getX());
-
-//        System.out.println(relMouseX + "   " + player.x);
-
-        if (relMouseX - player.getX() < player.getX()) return -1;
-        else if (relMouseX > player.getX()) return 1;
-        return 0;
+    public boolean isA() {
+        return Gdx.input.isKeyPressed(A);
     }
 
     @Override
-    public float get_right_stickY() {
-
-        float relMouseY = Gdx.input.getY() + player.getY();
-
-        if (relMouseY < player.getY()) return -1;
-        else if (relMouseY > player.getY()) return 1;
-        return 0;
+    public boolean isB() {
+        return Gdx.input.isKeyPressed(B);
     }
 
     @Override
-    public boolean get_isA() {
-        return Gdx.input.isKeyPressed(Keys.Y);
+    public boolean isX() {
+        return Gdx.input.isKeyPressed(X);
     }
 
     @Override
-    public boolean get_isB() {
-        return Gdx.input.isKeyPressed(Keys.X);
-
-    }
-
-    @Override
-    public float get_trigger_left() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public float get_trigger_right() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean get_isY() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean get_isX() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_DPAD_UP() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_DPAD_DOWN() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_DPAD_LEFT() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_DPAD_RIGHT() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_L1_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_R1_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_BACK_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_START_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_L3_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean is_R3_pressed() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public void poll() {
     }
 }

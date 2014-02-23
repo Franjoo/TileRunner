@@ -10,6 +10,7 @@ package com.tilerunner.core;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
@@ -24,7 +25,7 @@ public class Main implements ApplicationListener {
     private static final String TAG = Main.class.getSimpleName();
 
     // debug bools
-    private static final boolean FPS_LOGGING = true;
+    private static final boolean FPS_LOGGING = false;
 
     // statsdisplay
     private StatsDisplay stats;
@@ -61,6 +62,10 @@ public class Main implements ApplicationListener {
 
         // log fps
         if (FPS_LOGGING) fpsLogger.log();
+
+        if(Gdx.input.isKeyPressed(Input.Keys.F6)){
+            create();
+        }
     }
 
     @Override
