@@ -49,8 +49,8 @@ public class X360Gamepad implements IX360Gamepad, IGameInput {
     private float triggerLeft;
     private float triggerRight;
 
-    private float stickLeftDeadZone;
-    private float stickRightDeadZone;
+    private float stickLeftDeadZone = 0.3f;
+    private float stickRightDeadZone = 0.3f;
 
 
     // controller reference

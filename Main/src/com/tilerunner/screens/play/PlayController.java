@@ -71,35 +71,54 @@ public class PlayController {
             // ui
             playUI = new PlayUI();
 
-
-//        //**** MULTIPLAYER
-//        else {
-//            world = new World(this);
-//            p1 = new Player(world, 1);
-//            p2 = new Player(world, 2);
-//
-//            // input
-//            IGameInputController input_p1 = null;
-//            IGameInputController input_p2 = null;
-//            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-//
-//                // xbox 360 controller
-//                Array<Controller> controllers = Controllers.getControllers();
-//                if (controllers.get(0) != null) input_p1 = new _X360Gamepad(controllers.get(0));
-//                if (controllers.get(1) != null) input_p2 = new _X360Gamepad(controllers.get(1));
-//            }
-//
-//            p1.setInputController(input_p1);
-//            p2.setInputController(input_p2);
-//
-//            cameraManager = new CameraManager(p1, p2);
-//
-//            world.setPlayers(p1, p2);
-//            world.createEnemies();
-//            world.createRenderer(PlayScreen.getInstance().getBatch());
-//        }
         }
 
+
+        //**** MULTIPLAYER
+        else {
+            world = new World(this);
+            p1 = new Player(world, 1);
+            p2 = new Player(world, 2);
+
+            // input
+            IGameInput input_p1 = null;
+            IGameInput input_p2 = null;
+            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+
+                // xbox 360 controller
+                Array<Controller> controllers = Controllers.getControllers();
+                if (controllers.size >= 1) input_p1 = new X360Gamepad(controllers.get(0));
+                else {
+                    input_p1 = new KeyboardInput(Input.Keys.NUMPAD_1,  // left
+                            Input.Keys.NUMPAD_3, // right
+                            Input.Keys.NUMPAD_5, // up
+                            Input.Keys.NUMPAD_2, // down
+                            Input.Keys.SEMICOLON, // a
+                            Input.Keys.APOSTROPHE, // b
+                            Input.Keys.SHIFT_RIGHT); // x
+                }
+
+                if (controllers.size >= 2) input_p2 = new X360Gamepad(controllers.get(1));
+                else {
+                    input_p2 = new KeyboardInput(Input.Keys.F,  // left
+                            Input.Keys.H, // right
+                            Input.Keys.T, // up
+                            Input.Keys.G, // down
+                            Input.Keys.A, // a
+                            Input.Keys.S, // b
+                            Input.Keys.D); // x
+                }
+            }
+
+            p1.setInputController(input_p1);
+            p2.setInputController(input_p2);
+
+            cameraManager = new CameraManager(p1, p2);
+
+            world.setPlayers(p1, p2);
+            world.createEnemies();
+            world.createRenderer(PlayScreen.getInstance().getBatch());
+        }
     }
 
 
