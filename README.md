@@ -4,7 +4,9 @@ TileRunner
 2D Multiplayer Platformer
 
 
-========= Feature List =========
+Feature List
+============
+
 + Spine Animations
 + Tiled Integration
 + Multiplayer
