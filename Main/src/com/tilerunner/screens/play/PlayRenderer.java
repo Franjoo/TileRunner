@@ -1,11 +1,11 @@
 package com.tilerunner.screens.play;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -19,13 +19,13 @@ public class PlayRenderer {
     private PlayController playController;
     private SpriteBatch batch;
 
-    private Texture border_left;
-    private Texture border_right;
     private Texture tSplit;
 
     private Color _color;
 
-    private Vector3 vector3 = new Vector3();
+    // DEBUGGING
+    private boolean showBounds = true;
+
 
     /**
      * creates an new PlayRenderer
@@ -43,6 +43,8 @@ public class PlayRenderer {
         drawBorderTextures();
 
         _color = new Color();
+
+
     }
 
     private void drawBorderTextures() {
@@ -67,6 +69,9 @@ public class PlayRenderer {
      */
     public void render(float deltaTime) {
 
+        // DEBUGGING Controls
+        if(Gdx.input.isKeyPressed(Input.Keys.F8)) showBounds = !showBounds;
+
         batch.setColor(1, 1, 1, 1);
 
 
@@ -74,8 +79,8 @@ public class PlayRenderer {
         int vh = 600;
 
         // traps
-        playController.getWorld().renderTraps(batch);
 
+        playController.getWorld().getRenderer().setView(playController.getCameraManager().getCamera_shared());
 
 //        batch = PlayScreen.getInstance().getBatch();
 //        Gdx.gl.glViewport(0, 0, vw, vh);
@@ -94,11 +99,20 @@ public class PlayRenderer {
 
         batch.setColor(1, 1, 1, 1);
 
+        // checkpoints
+        playController.getWorld().checkpoints().render(batch);
+
+        // traps
+        playController.getWorld().traps().render(batch);
         // gameLayer
         playController.getWorld().renderGameLayer(batch);
 
-        // shader layer
-//        playController.getWorld().renderShaderLayers(batch);
+        // DEBUGGING BOUNDS
+        if (showBounds) {
+            playController.getWorld().traps().renderBounds(batch);
+            playController.getWorld().checkpoints().renderBounds(batch);
+        }
+
 
         // enemies
         for (int i = 0; i < playController.getWorld().getEnemies().size; i++) {
@@ -117,20 +131,8 @@ public class PlayRenderer {
         playController.getWorld().renderDecorations(batch);
 
         // coins
-        playController.getWorld().getCoins().render(batch);
+        playController.getWorld().coins().render(batch);
 
-
-//        playController.getPlayUI().render();
-
-//        batch.flush();
-//
-        // foreground
-//        _color.set(batch.getColor());
-//        batch.begin();
-//        batch.setColor(0.2f,0.2f,0.2f,1);
-//        playController.getWorld().renderForeground();
-//        batch.flush();
-//        batch.end();
 
     }
 

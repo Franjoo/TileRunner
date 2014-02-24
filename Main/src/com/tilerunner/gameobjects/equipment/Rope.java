@@ -10,7 +10,6 @@ import com.tilerunner.gameobjects.player.IPlayable;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.Detector;
 import com.tilerunner.input.IGameInput;
-import com.tilerunner.input.IGameInputController;
 
 /**
  * User: Franjo

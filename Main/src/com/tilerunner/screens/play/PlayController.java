@@ -64,12 +64,18 @@ public class PlayController {
             cameraManager = new CameraManager(p1, null);
 
             world.setPlayers(p1);
+
             world.createEnemies();
             world.createRenderer(PlayScreen.getInstance().getBatch());
+            world.setCamera(cameraManager.getCamera_shared());
 
 
             // ui
             playUI = new PlayUI();
+
+
+            world.getRenderer().setView(cameraManager.getCamera_shared());
+
 
         }
 
@@ -125,42 +131,45 @@ public class PlayController {
     /**
      * updates the objects used in PlayScreen
      *
-     * @param deltaTime time since last frame
+     * @param delta time since last frame
      */
-    public void update(float deltaTime) {
+    public void update(float delta) {
 
         if (PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER) {
             p1.getInputController().poll();
-            p1.update(deltaTime);
+            p1.update(delta);
 
         } else {
             p1.getInputController().poll();
             p2.getInputController().poll();
 
             // update players
-            p1.update(deltaTime);
-            p2.update(deltaTime);
+            p1.update(delta);
+            p2.update(delta);
         }
 
         // update enemies
         for (int i = 0; i < world.getEnemies().size; i++) {
-            world.getEnemies().get(i).update(deltaTime);
+            world.getEnemies().get(i).update(delta);
         }
 
         // pool objects
-        world.updatePoolObjects(deltaTime);
+        world.updatePoolObjects(delta);
+
+        // checkpoints
+        world.checkpoints().update(delta);
 
         // traps
-        world.updateTraps(deltaTime);
+        world.traps().update(delta);
 
         // decorations
-        world.updateDecorations(deltaTime);
+        world.updateDecorations(delta);
 
         // coins
-        world.getCoins().update(deltaTime);
+        world.coins().update(delta);
 
         // update cameraManager
-        cameraManager.update(deltaTime);
+        cameraManager.update(delta);
 
         // update playUI
 //        playUI.update(deltaTime);

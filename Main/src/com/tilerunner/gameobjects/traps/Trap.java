@@ -1,6 +1,7 @@
 package com.tilerunner.gameobjects.traps;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tilerunner.gameobjects.IHitable;
 
 /**
  * User: Franjo
@@ -8,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Time: 16:01
  * Project: TileRunner
  */
-public interface Trap {
+public interface Trap extends IHitable {
 
+    void update(float delta);
 
-    public boolean isHit(float x, float y);
+    void draw(SpriteBatch batch);
 
-    public void update(float delta);
-
-    public void render(SpriteBatch batch);
-
+    void drawBounds(SpriteBatch batch);
 }

@@ -3,7 +3,6 @@ package com.tilerunner.gameobjects.equipment;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.input.IGameInput;
-import com.tilerunner.input.IGameInputController;
 
 /**
  * User: Franjo

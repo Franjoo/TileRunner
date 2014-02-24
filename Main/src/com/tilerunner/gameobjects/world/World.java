@@ -4,20 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.tilerunner.gameobjects.checkpoints.Checkpoints;
 import com.tilerunner.gameobjects.collectibles.Coins;
 import com.tilerunner.gameobjects.decorations.Decoration;
 import com.tilerunner.gameobjects.decorations.Torch;
@@ -27,6 +26,7 @@ import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.enemies.Enemy;
 import com.tilerunner.gameobjects.traps.Saw;
 import com.tilerunner.gameobjects.traps.Trap;
+import com.tilerunner.gameobjects.traps.Traps;
 import com.tilerunner.gameobjects.weapons.Bomb;
 import com.tilerunner.gameobjects.weapons.Shiver;
 import com.tilerunner.gameobjects.weapons.poolables.Bullet;
@@ -95,14 +95,14 @@ public class World {
     private TiledMapTileLayer tl_normal;
     private TiledMapTileLayer tl_diffuse;
 
-    // traps
-    private Array<Trap> traps;
+    // map object collections
+    private Traps traps;
+    private Checkpoints checkpoints;
+    private Coins coins;
+
 
     // decorations
     private Array<Decoration> decorations;
-
-    // coins
-    private Coins coins;
 
 
     // test
@@ -135,7 +135,11 @@ public class World {
 
         createLayers();
 
-        createTraps();
+        // create checkpoints
+        checkpoints = new Checkpoints(map,this);
+
+        // create traps
+        traps = new Traps(map, this);
 
         createDecorations();
 
@@ -202,51 +206,51 @@ public class World {
 
     }
 
-    public void updateTraps(float delta) {
-        for (int i = 0; i < traps.size; i++) {
-            Trap t = traps.get(i);
-            t.update(delta);
-            for (int j = 0; j < players.size; j++) {
-                Player p = players.get(j);
-                if (t.isHit(p.getX(), p.getY())) {
-                    System.out.println("Hit");
-                }
-            }
-        }
-    }
+//    public void updateTraps(float delta) {
+//        for (int i = 0; i < traps.size; i++) {
+//            Trap t = traps.get(i);
+//            t.update(delta);
+//            for (int j = 0; j < players.size; j++) {
+//                Player p = players.get(j);
+//                if (t.isHit(p.getX(), p.getY())) {
+//                    System.out.println("Hit");
+//                }
+//            }
+//        }
+//    }
 
-    public void renderTraps(SpriteBatch batch) {
-        for (int i = 0; i < traps.size; i++) {
-            traps.get(i).render(batch);
-        }
-    }
+//    public void renderTraps(SpriteBatch batch) {
+//        for (int i = 0; i < traps.size; i++) {
+//            traps.get(i).render(batch);
+//        }
+//    }
 
-    private void createTraps() {
-        traps = new Array<>();
-        for (int i = 0; i < map.getLayers().getCount(); i++) {
-            MapLayer l = map.getLayers().get(i);
-            if (l.getObjects().getCount() != 0 && l.getProperties().containsKey("trap")) {
-                MapObjects objects = l.getObjects();
-                for (int j = 0; j < objects.getCount(); j++) {
-                    MapObject o = objects.get(j);
-                    MapProperties p = o.getProperties();
-
-                    // saw
-                    if (o.getProperties().containsKey("saw")) {
-                        float x = Integer.parseInt(p.get("x").toString());
-                        float y = Integer.parseInt(p.get("y").toString());
-                        float w = Integer.parseInt(p.get("w").toString()) * tileWidth;
-                        float h = Integer.parseInt(p.get("h").toString()) * tileHeight;
-                        float vr = Float.parseFloat(p.get("vr").toString());
-
-                        Saw saw = new Saw(x, y, w, h, vr, new TextureRegion(new Texture(Gdx.files.internal("saw.png"))));
-                        traps.add(saw);
-                    }
-                }
-            }
-        }
-
-    }
+//    private void createTraps() {
+//        traps = new Array<>();
+//        for (int i = 0; i < map.getLayers().getCount(); i++) {
+//            MapLayer l = map.getLayers().get(i);
+//            if (l.getObjects().getCount() != 0 && l.getProperties().containsKey("traps")) {
+//                MapObjects objects = l.getObjects();
+//                for (int j = 0; j < objects.getCount(); j++) {
+//                    MapObject o = objects.get(j);
+//                    MapProperties p = o.getProperties();
+//
+//                    // saw
+//                    if (o.getProperties().containsKey("saw")) {
+//                        float x = Integer.parseInt(p.get("x").toString());
+//                        float y = Integer.parseInt(p.get("y").toString());
+//                        float w = Integer.parseInt(p.get("w").toString()) * TILESIZE;
+//                        float h = Integer.parseInt(p.get("h").toString()) * TILESIZE;
+////                        float vr = Float.parseFloat(p.get("vr").toString());
+//
+//                        Saw saw = new Saw(x, y, w, h, 20, new TextureRegion(new Texture(Gdx.files.internal("saw.png"))));
+//                        traps.add(saw);
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
     /**
      * creates pool contexts
@@ -572,7 +576,7 @@ public class World {
 
     public void renderForeground() {
 
-        renderer.setView(playController.getCameraManager().getCamera_shared());
+//        renderer.setView(playController.getCameraManager().getCamera_shared());
 //        renderer.render(new int[]{map.getLayers().getCount() - 1});
 
         renderer.render(layers_fg);
@@ -580,19 +584,19 @@ public class World {
 
     public void renderGameLayer(SpriteBatch batch) {
         batch.begin();
-        renderer.setView(playController.getCameraManager().getCamera_shared());
+//        renderer.setView(playController.getCameraManager().getCamera_shared());
         renderer.renderTileLayer(gameLayer);
         batch.end();
     }
 
     public void renderBackground() {
-        renderer.setView(playController.getCameraManager().getCamera_shared());
+//        renderer.setView(playController.getCameraManager().getCamera_shared());
         renderer.render(layers_bg);
     }
 
     public void renderGhostLayer(SpriteBatch batch) {
         batch.begin();
-        renderer.setView(playController.getCameraManager().getCamera_shared());
+//        renderer.setView(playController.getCameraManager().getCamera_shared());
 //        renderer.render(new int[]{map.getLayers().getCount() - 1});
 //        renderer.renderTileLayer(ghostLayer);
         batch.end();
@@ -681,8 +685,24 @@ public class World {
         return enemies;
     }
 
-    public Coins getCoins(){
+    public Coins coins(){
         return coins;
+    }
+
+    public Checkpoints checkpoints(){
+        return checkpoints;
+    }
+
+    public void setCamera(OrthographicCamera camera) {
+        renderer.setView(camera);
+    }
+
+    public MapRenderer getRenderer() {
+        return renderer;
+    }
+
+    public Traps traps() {
+        return traps;
     }
 
 

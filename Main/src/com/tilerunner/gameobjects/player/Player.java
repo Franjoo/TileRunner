@@ -3,9 +3,15 @@ package com.tilerunner.gameobjects.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Bone;
+import com.esotericsoftware.spine.SkeletonBounds;
+import com.tilerunner.gameobjects.checkpoints.Checkpoint;
+import com.tilerunner.gameobjects.traps.Trap;
+import com.tilerunner.gameobjects.traps.Traps;
 import com.tilerunner.gameobjects.world.Detector;
 import com.tilerunner.core.C;
 import com.tilerunner.gameobjects.world.World;
@@ -36,6 +42,8 @@ public class Player extends Creature implements IPlayable {
 
     private final float aJ = 100;
 
+    // mao objects
+    private Checkpoint checkpoint;
 
     private IGameInput input;
     private World world;
@@ -89,6 +97,18 @@ public class Player extends Creature implements IPlayable {
         createSounds();
 
         setupAnimationStates();
+
+//        skeletonDebugRenderer
+
+//        skeleton.findBone("").
+
+
+        //test
+//        System.out.println("SIZE:" + getSkeletonBounds().getBoundingBoxes().size);
+        System.out.println("SIZE:" + getSkeletonBounds().getBoundingBoxes().size);
+//        for (int i = 0; i < getSkeletonBounds().getBoundingBoxes().get(0).getVertices().length; i++) {
+//            System.out.println(getSkeletonBounds().getBoundingBoxes().get(0).getVertices()[i]);
+//        }
 
     }
 
@@ -200,12 +220,56 @@ public class Player extends Creature implements IPlayable {
         state.update(delta);
         state.apply(skeleton);
 
-//        System.out.println(x + " "  + y );
+        // tile collision
+        setTileCollisionPosition();
 
-        setCollisionPosition();
+        // check trap collision
+        checkTrapCollision();
 
-//        getSkeletonBounds().update(skeleton,true);
+        // set checkpoint
+        setCheckpoint();
 
+
+    }
+
+    private void setCheckpoint() {
+        Array<Checkpoint> checkpoints = world.checkpoints().getCheckpoints();
+        for (int i = 0; i < checkpoints.size; i++) {
+            if(checkpoints.get(i).isHit(x,y)){
+                System.out.println("hit checkpoint");
+                checkpoint = checkpoints.get(i);
+            }
+        }
+    }
+
+    private void checkTrapCollision() {
+
+        Array<Trap> traps = world.traps().getTraps();
+        for (int i = 0; i < traps.size; i++) {
+            for (int j = 0; j < world.getPlayers().size; j++) {
+                Player p = world.getPlayers().get(j);
+                SkeletonBounds bounds = p.getSkeletonBounds();
+
+                // polygonal shape
+                for (int l = 0; l < bounds.getPolygons().size; l++) {
+
+                    // vertices
+                    FloatArray polygon = bounds.getPolygons().get(l);
+                    for (int u = 0; u < polygon.size; u += 2) {
+
+                        if (traps.get(i).isHit(polygon.get(u),polygon.get(u + 1))) {
+                            System.out.println("hit trap: " + bounds.getBoundingBoxes().get(l));
+
+                            x = checkpoint.getPointX();
+                            y = checkpoint.getPointY();
+                        }
+                    }
+
+                }
+
+            }
+
+        }
     }
 
     private String current() {
@@ -223,6 +287,8 @@ public class Player extends Creature implements IPlayable {
     @Override
     public float getX() {
         return x;
+
+
     }
 
     @Override
@@ -260,9 +326,12 @@ public class Player extends Creature implements IPlayable {
         return skeleton.findBone(name);
     }
 
-    private void setCollisionPosition() {
+    private void setTileCollisionPosition() {
 
         // todo ruckeln in solid to step
+
+        SkeletonBounds bounds = getSkeletonBounds();
+//        System.out.println(bounds.getMaxX());
 
         hit_left = false;
         hit_right = false;
@@ -276,14 +345,14 @@ public class Player extends Creature implements IPlayable {
             if (detector.getStep(x, y + 2) != null && detector.getStep(x, y) == null) {
                 y += 2;
 
-                System.out.println("solid to step left");
+//                System.out.println("solid to step left");
             }
 
             // step to solid
             else if (detector.getStep(x - vX, y) != null && detector.isSolid(x, y) && !detector.isSolid(x, y + 2)) {
                 y += 2;
 
-                System.out.println("step to solid left");
+//                System.out.println("step to solid left");
 
             }
 
@@ -303,7 +372,7 @@ public class Player extends Creature implements IPlayable {
             if (detector.getStep(x, y + 2) != null && detector.getStep(x, y) == null) {
                 y += 2;
 
-                System.out.println("solid to step right");
+//                System.out.println("solid to step right");
 
             }
 
@@ -311,7 +380,7 @@ public class Player extends Creature implements IPlayable {
             else if (detector.getStep(x - vX, y) != null && detector.isSolid(x, y) && !detector.isSolid(x, y + 2)) {
                 y += 2;
 
-                System.out.println("step to solid right");
+//                System.out.println("step to solid right");
             }
 
             // solid
@@ -360,9 +429,13 @@ public class Player extends Creature implements IPlayable {
                 hit_top = true;
                 vY = 0;
 
-                System.out.println("top");
+//                System.out.println("top");
             }
         }
+
+    }
+
+    public void getPolygonVertices(){
 
     }
 }

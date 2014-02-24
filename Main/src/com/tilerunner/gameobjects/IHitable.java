@@ -6,7 +6,7 @@ package com.tilerunner.gameobjects;
  * Time: 14:27
  * Project: TileRunner
  */
-public interface Hitable {
+public interface IHitable {
 
     public boolean isHit(float x, float y);
 

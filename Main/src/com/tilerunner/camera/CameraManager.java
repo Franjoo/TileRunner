@@ -113,13 +113,13 @@ public class CameraManager {
             useShared = true;
 
             // update helper
-            helper_p1.update(deltaTime);
-            helper_p2.update(deltaTime);
+//            helper_p1.update(deltaTime);
+//            helper_p2.update(deltaTime);
             helper_shared.update(deltaTime);
 
             // apply to cameras
-            helper_p1.applyTo(camera_p1);
-            helper_p2.applyTo(camera_p2);
+//            helper_p1.applyTo(camera_p1);
+//            helper_p2.applyTo(camera_p2);
             helper_shared.applyTo(camera_shared);
 
         }
