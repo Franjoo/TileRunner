@@ -10,6 +10,8 @@ import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.tilerunner.gameobjects.checkpoints.Checkpoint;
+import com.tilerunner.gameobjects.platforms.Platform;
+import com.tilerunner.gameobjects.platforms.Platforms;
 import com.tilerunner.gameobjects.traps.Trap;
 import com.tilerunner.gameobjects.traps.Traps;
 import com.tilerunner.gameobjects.world.Detector;
@@ -33,6 +35,8 @@ public class Player extends Creature implements IPlayable {
     public boolean hit_bottom;
     public boolean hit_left;
     public boolean hit_right;
+    private boolean isOnPlatform;
+
 
     // animation
     private AnimationState state;
@@ -44,6 +48,16 @@ public class Player extends Creature implements IPlayable {
 
     // mao objects
     private Checkpoint checkpoint;
+
+    // wafting
+    private boolean wafts;
+    private float waftX;
+    private float waftY;
+    private float waftV;
+    private float waftA;
+    private float waftTime = 2;
+    private float waftElapsed;
+
 
     private IGameInput input;
     private World world;
@@ -117,14 +131,19 @@ public class Player extends Creature implements IPlayable {
         // walk
         stateData.setMix("walk", "idle", 0.2f);
         stateData.setMix("walk", "jump", 0.2f);
+        stateData.setMix("walk", "waft_start", 1f);
+
         // jump
         stateData.setMix("jump", "land", 0.2f);
+        stateData.setMix("jump", "waft_start", 1f);
         // land
         stateData.setMix("land", "walk", 0.2f);
         stateData.setMix("land", "idle", 0.2f);
+        stateData.setMix("land", "waft_start", 1f);
         //idle
         stateData.setMix("idle", "walk", 0.2f);
         stateData.setMix("idle", "jump", 0.2f);
+        stateData.setMix("idle", "waft_start", 1f);
 
 
         state = new AnimationState(stateData);
@@ -143,24 +162,42 @@ public class Player extends Creature implements IPlayable {
     public void update(float delta) {
         super.update(delta);
 
-        vX = input.stickX() * vX_Max;
+        // wafting
+        if (wafts) {
+            waftElapsed += delta;
+            if (waftElapsed >= waftTime) {
+                wafts = false;
+                waftElapsed = 0;
+            } else {
+                x += waftX * waftV * delta;
+                y += waftY * waftV * delta;
+
+                state.update(delta);
+                state.apply(skeleton);
+            }
+        }
+
+        // not wafting
+        else {
+
+            vX = input.stickX() * vX_Max;
 
 //        vX *= frictionX;
-        vY += C.GRAVITY * delta;
+            vY += C.GRAVITY * delta;
 
 
-        // additional jump height
-        if (current().equals("jump") && vY >= 0 && input.isA()) {
-            vY += 0.7;
-        }
+            // additional jump height
+            if (current().equals("jump") && vY >= 0 && input.isA()) {
+                vY += 0.7;
+            }
 
-        // jump start
-        if (hit_bottom && input.isA()) {
-            state.setAnimation(0, "jump", false);
-            state.addAnimation(0, "land", false, 0);
-            sndJump.play();
-            vY += 23;
-        }
+            // jump start
+            if (hit_bottom && input.isA()) {
+                state.setAnimation(0, "jump", false);
+                state.addAnimation(0, "land", false, 0);
+                sndJump.play();
+                vY += 23;
+            }
 
 
 //        if (current().equals("jump")){
@@ -173,30 +210,30 @@ public class Player extends Creature implements IPlayable {
 //        }
 
 
-        // set to limits
-        if (vY > vY_Max) vY = vY_Max;
-        else if (vY < vY_Min) vY = vY_Min;
-        if (vX > vX_Max) vX = vX_Max;
-        else if (vX < vX_Min) vX = vX_Min;
-        if (Math.abs(vX) < 0.02) vX = 0;
+            // set to limits
+            if (vY > vY_Max) vY = vY_Max;
+            else if (vY < vY_Min) vY = vY_Min;
+            if (vX > vX_Max) vX = vX_Max;
+            else if (vX < vX_Min) vX = vX_Min;
+            if (Math.abs(vX) < 0.02) vX = 0;
 
-        // set position
-        x += vX;
-        y += vY;
-
-
-        // A N I M A T I O N
-
-        if (state.getCurrent(0) == null) state.setAnimation(0, "idle", true);
-        assert state.getCurrent(0).getAnimation() != null;
+            // set position
+            x += vX;
+            y += vY;
 
 
-        skeleton.setFlipX(vX < 0);
+            // A N I M A T I O N
 
-        if (Math.abs(input.stickX()) >= 0.5f && !state.getCurrent(0).getAnimation().getName().equals("jump")) {
-            if (!state.getCurrent(0).getAnimation().getName().equals("walk")) {
-                state.setAnimation(0, "walk", true);
-            }
+            if (state.getCurrent(0) == null) state.setAnimation(0, "idle", true);
+            assert state.getCurrent(0).getAnimation() != null;
+
+
+            skeleton.setFlipX(vX < 0);
+
+            if (Math.abs(input.stickX()) >= 0.5f && !state.getCurrent(0).getAnimation().getName().equals("jump")) {
+                if (!state.getCurrent(0).getAnimation().getName().equals("walk")) {
+                    state.setAnimation(0, "walk", true);
+                }
 
 //
 //            if (!state.getCurrent(0).getAnimation().getName().equals("walk")) {
@@ -205,9 +242,9 @@ public class Player extends Creature implements IPlayable {
 //            }
 //
 
-        } else if (!state.getCurrent(0).getAnimation().getName().equals("idle")) {
-            state.addAnimation(0, "idle", true, 0);
-        }
+            } else if (!state.getCurrent(0).getAnimation().getName().equals("idle")) {
+                state.addAnimation(0, "idle", true, 0);
+            }
 //            state.clearTracks();
 //            state.setAnimation(0,"walk",false);
 //            state.setAnimation(0,"walk",true);
@@ -217,17 +254,22 @@ public class Player extends Creature implements IPlayable {
 //            state.setAnimation(0, "idle", true);
 //        }
 
-        state.update(delta);
-        state.apply(skeleton);
+            state.update(delta);
+            state.apply(skeleton);
 
-        // tile collision
-        setTileCollisionPosition();
 
-        // check trap collision
-        checkTrapCollision();
+            // tile collision
+            setTileCollisionPosition();
 
-        // set checkpoint
-        setCheckpoint();
+            // platform collision
+            setPlatformCollisionPosition(delta);
+
+            // check trap collision
+            checkTrapCollision();
+
+            // set checkpoint
+            setCheckpoint();
+        }
 
 
     }
@@ -235,7 +277,7 @@ public class Player extends Creature implements IPlayable {
     private void setCheckpoint() {
         Array<Checkpoint> checkpoints = world.checkpoints().getCheckpoints();
         for (int i = 0; i < checkpoints.size; i++) {
-            if(checkpoints.get(i).isHit(x,y)){
+            if (checkpoints.get(i).isHit(x, y)) {
                 System.out.println("hit checkpoint");
                 checkpoint = checkpoints.get(i);
             }
@@ -257,11 +299,11 @@ public class Player extends Creature implements IPlayable {
                     FloatArray polygon = bounds.getPolygons().get(l);
                     for (int u = 0; u < polygon.size; u += 2) {
 
-                        if (traps.get(i).isHit(polygon.get(u),polygon.get(u + 1))) {
+                        if (traps.get(i).isHit(polygon.get(u), polygon.get(u + 1))) {
                             System.out.println("hit trap: " + bounds.getBoundingBoxes().get(l));
 
-                            x = checkpoint.getPointX();
-                            y = checkpoint.getPointY();
+                            wafts = true;
+                            waft(checkpoint.getPointX(), checkpoint.getPointY());
                         }
                     }
 
@@ -270,6 +312,23 @@ public class Player extends Creature implements IPlayable {
             }
 
         }
+    }
+
+    private void waft(float x, float y) {
+        // distance
+        float dirX = x - this.x;
+        float dirY = y - this.y;
+        float dist = (float) Math.sqrt(dirX * dirX + dirY * dirY);
+
+        // normalize
+        waftX = dirX / dist;
+        waftY = dirY / dist;
+
+        waftTime = 2;
+        waftV = dist / waftTime;
+
+        state.setAnimation(0, "waft_start", true);
+//        waftV = 120;
     }
 
     private String current() {
@@ -435,7 +494,34 @@ public class Player extends Creature implements IPlayable {
 
     }
 
-    public void getPolygonVertices(){
+    public void setPlatformCollisionPosition(float delta) {
 
+        isOnPlatform = false;
+
+        Array<Platform> platforms = world.platforms().getPlatforms();
+        for (int i = 0; i < platforms.size; i++) {
+            Platform platform = platforms.get(i);
+
+            // bottom
+            if (vY < 0) {
+
+                if (platform.isHit(x, y)) {
+                    y = platform.getY() + platform.getHeight();
+                    x += platform.getVx() * delta;
+                    isOnPlatform = true;
+                    hit_bottom = true;
+                    vY = 0;
+
+                }
+            }
+        }
+    }
+
+    public void getPolygonVertices() {
+
+    }
+
+    public boolean isWafting() {
+        return wafts;
     }
 }

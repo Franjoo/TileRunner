@@ -168,6 +168,9 @@ public class PlayController {
         // coins
         world.coins().update(delta);
 
+        // platforms
+        world.platforms().update(delta);
+
         // update cameraManager
         cameraManager.update(delta);
 

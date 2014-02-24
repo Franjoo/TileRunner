@@ -55,13 +55,18 @@ public class Coin {
         // update animation time
         time += delta;
 
+        if (target != null && target.isWafting()) {
+            target = null;
+        }
+
         // distance to player
-        if (target == null) {
+        else if (target == null) {
 
             float dist = Float.MAX_VALUE;
 
             for (int i = 0; i < world.getPlayers().size; i++) {
                 Player p = world.getPlayers().get(i);
+
 
                 // root bone position of player
                 final float px = p.getBone("root").getWorldX() + p.getX();
@@ -72,7 +77,7 @@ public class Coin {
                 float y_d = py - y;
                 float distance = (float) Math.sqrt(x_d * x_d + y_d * y_d);
 
-                if (distance <= dist && distance  <= 160) {
+                if (distance <= dist && distance <= 160) {
                     dist = distance;
                     target = p;
 
@@ -94,6 +99,7 @@ public class Coin {
                     }
                 }
             }
+
         } else {
             Player p = target;
 
@@ -120,14 +126,16 @@ public class Coin {
             vx *= friction;
             vy *= friction;
 
-
+            x += vx;
+            y += vy;
         }
 
-// update position
-        x += vx;
-        y += vy;
-
+        // update position
+//        if (!target.isWafting()) {
+//
+//        }
     }
+
 
     public void draw(SpriteBatch batch) {
         batch.draw(animation.getKeyFrame(time), x, y);

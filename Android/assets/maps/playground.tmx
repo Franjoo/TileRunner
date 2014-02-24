@@ -80,10 +80,10 @@
  </tileset>
  <layer name="$c$gl" width="400" height="300">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <objectgroup draworder="topdown" name="Coins Mix" width="400" height="300" visible="0">
+ <objectgroup draworder="topdown" name="Coins Mix" width="400" height="300">
   <properties>
    <property name="coins" value=""/>
   </properties>
@@ -135,23 +135,29 @@
   <object type="white" x="1632" y="8352"/>
   <object type="white" x="1504" y="8352"/>
   <object type="white" x="1376" y="8352"/>
+  <object type="blue" x="1184" y="7840"/>
+  <object type="blue" x="1248" y="7840"/>
+  <object type="blue" x="1312" y="7840"/>
+  <object type="blue" x="1376" y="7840"/>
+  <object type="blue" x="1440" y="7840"/>
+  <object type="blue" x="1504" y="7840"/>
  </objectgroup>
  <objectgroup draworder="topdown" name="traps" width="400" height="300">
   <properties>
    <property name="traps" value=""/>
   </properties>
-  <object type="saw" x="1984" y="8384" width="320" height="320">
+  <object type="saw" x="2752" y="7408" width="320" height="320">
    <properties>
     <property name="h" value="5"/>
     <property name="saw" value=""/>
     <property name="w" value="5"/>
    </properties>
   </object>
-  <object type="saw" x="3008" y="8128" width="320" height="320">
+  <object type="saw" x="2192" y="6640" width="640" height="640">
    <properties>
-    <property name="h" value="5"/>
+    <property name="h" value="10"/>
     <property name="saw" value=""/>
-    <property name="w" value="5"/>
+    <property name="w" value="10"/>
    </properties>
   </object>
   <object type="saw" x="4032" y="7872" width="320" height="320">
@@ -161,8 +167,15 @@
     <property name="w" value="5"/>
    </properties>
   </object>
+  <object type="saw" x="7680" y="7824" width="320" height="320">
+   <properties>
+    <property name="h" value="5"/>
+    <property name="saw" value=""/>
+    <property name="w" value="5"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup draworder="topdown" name="checkpoints" width="400" height="300">
+ <objectgroup draworder="topdown" name="checkpoints" width="400" height="300" visible="0">
   <properties>
    <property name="checkpoints" value=""/>
   </properties>
@@ -172,16 +185,35 @@
     <property name="w" value="4"/>
    </properties>
   </object>
-  <object type="checkpoint" x="4944" y="7552" width="256" height="256">
+  <object type="checkpoint" x="4592" y="8720" width="256" height="256">
+   <properties>
+    <property name="h" value="4"/>
+    <property name="w" value="4"/>
+   </properties>
+  </object>
+  <object type="checkpoint" x="7904" y="8208" width="256" height="256">
    <properties>
     <property name="h" value="4"/>
     <property name="w" value="4"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup draworder="topdown" name="lines" width="400" height="300">
+ <objectgroup draworder="topdown" name="lines" width="400" height="300" visible="0">
   <object x="1824" y="7968">
    <polyline points="0,0 448,-320 1008,160"/>
+  </object>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="platfoms" width="400" height="300">
+  <properties>
+   <property name="platforms" value=""/>
+  </properties>
+  <object type="platform" x="576" y="7936" width="448" height="64">
+   <properties>
+    <property name="h" value="1"/>
+    <property name="p" value="30 -5"/>
+    <property name="v" value="3"/>
+    <property name="w" value="7"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

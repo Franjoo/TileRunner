@@ -22,6 +22,8 @@ import com.tilerunner.gameobjects.decorations.Decoration;
 import com.tilerunner.gameobjects.decorations.Torch;
 import com.tilerunner.gameobjects.enemies.Drone;
 import com.tilerunner.gameobjects.enemies.IEnemy;
+import com.tilerunner.gameobjects.platforms.Platform;
+import com.tilerunner.gameobjects.platforms.Platforms;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.enemies.Enemy;
 import com.tilerunner.gameobjects.traps.Saw;
@@ -99,6 +101,8 @@ public class World {
     private Traps traps;
     private Checkpoints checkpoints;
     private Coins coins;
+    private Platforms platforms;
+
 
 
     // decorations
@@ -140,6 +144,9 @@ public class World {
 
         // create traps
         traps = new Traps(map, this);
+
+        // platforms
+        platforms = new Platforms(map, this);
 
         createDecorations();
 
@@ -703,6 +710,10 @@ public class World {
 
     public Traps traps() {
         return traps;
+    }
+
+    public Platforms platforms() {
+        return platforms;
     }
 
 

@@ -106,11 +106,15 @@ public class PlayRenderer {
         playController.getWorld().traps().render(batch);
         // gameLayer
         playController.getWorld().renderGameLayer(batch);
+        //platforms
+        playController.getWorld().platforms().render(batch);
+
 
         // DEBUGGING BOUNDS
         if (showBounds) {
             playController.getWorld().traps().renderBounds(batch);
             playController.getWorld().checkpoints().renderBounds(batch);
+            playController.getWorld().platforms().renderBounds(batch);
         }
 
 

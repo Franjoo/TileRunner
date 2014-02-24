@@ -84,7 +84,7 @@ public class Coins {
             // collision
             for (int j = 0; j < world.getPlayers().size; j++) {
                 Player p = world.getPlayers().get(j);
-                if (p.getSkeletonBounds().aabbContainsPoint(coin.getX(), coin.getY())) {
+                if (!p.isWafting() && p.getSkeletonBounds().aabbContainsPoint(coin.getX(), coin.getY())) {
                     sound.play();
                     coins.removeValue(coin,true);
                 }
