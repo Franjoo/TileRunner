@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.tilerunner.gameobjects.boxes.Boxes;
 import com.tilerunner.gameobjects.checkpoints.Checkpoints;
 import com.tilerunner.gameobjects.collectibles.Coins;
 import com.tilerunner.gameobjects.decorations.Decoration;
@@ -102,6 +103,7 @@ public class World {
     private Checkpoints checkpoints;
     private Coins coins;
     private Platforms platforms;
+    private Boxes boxes;
 
 
 
@@ -147,6 +149,9 @@ public class World {
 
         // platforms
         platforms = new Platforms(map, this);
+
+        // boxes
+        boxes = new Boxes(map, this);
 
         createDecorations();
 
@@ -714,6 +719,10 @@ public class World {
 
     public Platforms platforms() {
         return platforms;
+    }
+
+    public Boxes boxes() {
+        return boxes;
     }
 
 

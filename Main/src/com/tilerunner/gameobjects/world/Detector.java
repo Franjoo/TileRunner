@@ -214,6 +214,10 @@ public final class Detector {
         return solids;
     }
 
+    public boolean isStep(float x, float y) {
+        return getStep(x,y) != null;
+    }
+
     public static class Step {
 
         public int y1;

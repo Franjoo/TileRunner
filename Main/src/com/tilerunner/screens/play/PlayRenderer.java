@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * class which is responsible for rendering the PlayScreen
@@ -88,16 +87,17 @@ public class PlayRenderer {
 
 
         // backgrounds
-        batch.setColor(0.3f, 0.3f, 0.3f, batch.getColor().a);
-        playController.getWorld().renderGhostLayer(batch);
+//        batch.setColor(0.3f, 0.3f, 0.3f, batch.getColor().a);
+//        playController.getWorld().renderGhostLayer(batch);
 
 
 //        batch.setColor(1,1,1,1);
-        batch.setColor(0.3f, 0.3f, 0.3f, batch.getColor().a);
+        batch.setColor(0.6f, 0.6f, 0.6f, 1);
         playController.getWorld().renderBackground();
+                batch.setColor(1,1,1,1);
 
 
-        batch.setColor(1, 1, 1, 1);
+//        batch.setColor(1, 1, 1, 1);
 
         // checkpoints
         playController.getWorld().checkpoints().render(batch);
@@ -108,6 +108,8 @@ public class PlayRenderer {
         playController.getWorld().renderGameLayer(batch);
         //platforms
         playController.getWorld().platforms().render(batch);
+        // boxes
+        playController.getWorld().boxes().render(batch);
 
 
         // DEBUGGING BOUNDS
@@ -115,6 +117,7 @@ public class PlayRenderer {
             playController.getWorld().traps().renderBounds(batch);
             playController.getWorld().checkpoints().renderBounds(batch);
             playController.getWorld().platforms().renderBounds(batch);
+            playController.getWorld().boxes().renderBounds(batch);
         }
 
 

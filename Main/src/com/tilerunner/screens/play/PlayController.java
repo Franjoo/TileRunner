@@ -171,6 +171,9 @@ public class PlayController {
         // platforms
         world.platforms().update(delta);
 
+        // boxes
+        world.boxes().update(delta);
+
         // update cameraManager
         cameraManager.update(delta);
 

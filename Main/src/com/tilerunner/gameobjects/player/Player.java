@@ -3,12 +3,14 @@ package com.tilerunner.gameobjects.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.SkeletonBounds;
+import com.tilerunner.gameobjects.boxes.Box;
 import com.tilerunner.gameobjects.checkpoints.Checkpoint;
 import com.tilerunner.gameobjects.platforms.Platform;
 import com.tilerunner.gameobjects.platforms.Platforms;
@@ -165,10 +167,15 @@ public class Player extends Creature implements IPlayable {
         // wafting
         if (wafts) {
             waftElapsed += delta;
+
+            // is at checkpoint
             if (waftElapsed >= waftTime) {
                 wafts = false;
                 waftElapsed = 0;
-            } else {
+            }
+
+            // update waft
+            else {
                 x += waftX * waftV * delta;
                 y += waftY * waftV * delta;
 
@@ -264,6 +271,9 @@ public class Player extends Creature implements IPlayable {
             // platform collision
             setPlatformCollisionPosition(delta);
 
+            // boxes
+            setBoxesCollisionPosition();
+
             // check trap collision
             checkTrapCollision();
 
@@ -271,6 +281,49 @@ public class Player extends Creature implements IPlayable {
             setCheckpoint();
         }
 
+
+    }
+
+    private void setBoxesCollisionPosition() {
+        for (int i = 0; i < world.boxes().getBoxes().size; i++) {
+            Box box = world.boxes().getBoxes().get(i);
+
+            boolean onTop = false;
+            SkeletonBounds bounds = getSkeletonBounds();
+
+            // top
+            if ((box.isHit(bounds.getMinX(), y) && !box.isHit(bounds.getMinX(), y - vY))
+                    || (box.isHit(bounds.getMaxX(), y) && !box.isHit(bounds.getMaxX(), y - vY))) {
+
+                y = box.getY() + box.getHeight() + C.EPSILON;
+                vY = 0;
+                hit_bottom = true;
+                onTop = true;
+
+            }
+
+            // right push
+            if (vX > 0 && hit_bottom && !onTop && box.isHit(bounds.getMaxX(), y)) {
+                x -= box.push(vX);
+            }
+
+            // left push
+            else if (vX < 0 && hit_bottom && !onTop && box.isHit(bounds.getMinX(), y)) {
+                x -= box.push(vX);
+            }
+
+            // right air collision
+            if (!hit_bottom && box.isHit(bounds.getMaxX(), y)) {
+                x = box.getX() + x - bounds.getMaxX();
+            }
+
+            // left air collision
+            else if (!hit_bottom && box.isHit(bounds.getMinX(), y)) {
+                x = box.getX() + box.getWidth() + x - bounds.getMinX();
+            }
+
+
+        }
 
     }
 
