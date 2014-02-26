@@ -1,5 +1,7 @@
-package com.tilerunner.gameobjects.boxes;
+package com.tilerunner.gameobjects.crates;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilerunner.core.C;
 import com.tilerunner.gameobjects.AbstractCollectionObject;
@@ -12,20 +14,23 @@ import com.tilerunner.gameobjects.world.World;
  * Date: 24.02.14
  * Time: 23:28
  */
-public class Box extends AbstractCollectionObject {
+public class Crate extends AbstractCollectionObject {
 
     private float friction = 0.4f;
     private Detector detector;
     private boolean falls = false;
     private float vX, vY;
+    private Texture tex_crate;
 
 
-    public Box(float x, float y, float width, float height) {
+    public Crate(float x, float y, float width, float height) {
         super(x, y, width, height);
 
         detector = Detector.getInstance();
 
         vX = 0;
+
+        tex_crate = new Texture(Gdx.files.internal("crate.png"));
     }
 
 
@@ -60,6 +65,7 @@ public class Box extends AbstractCollectionObject {
 
     @Override
     public void draw(SpriteBatch batch) {
+        batch.draw(tex_crate, x, y, width, height);
     }
 
     @Override

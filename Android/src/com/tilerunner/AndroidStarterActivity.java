@@ -3,6 +3,7 @@ package com.tilerunner;
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.tilerunner.core.Main;
 import test.particlesystem.TestEnvironment;
 
 public class AndroidStarterActivity extends AndroidApplication {
@@ -14,6 +15,6 @@ public class AndroidStarterActivity extends AndroidApplication {
         cfg.useGL20 = true;
 
 //        initialize(new PoolingTest(), cfg);
-        initialize(new TestEnvironment(), cfg);
+        initialize(new Main(), cfg);
     }
 }

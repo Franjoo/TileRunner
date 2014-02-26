@@ -224,11 +224,11 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup draworder="topdown" name="boxes" width="400" height="300">
+ <objectgroup draworder="topdown" name="crates" width="400" height="300">
   <properties>
-   <property name="boxes" value=""/>
+   <property name="crates" value=""/>
   </properties>
-  <object type="box" x="1088" y="8448" width="256" height="256">
+  <object type="crate" x="1088" y="8448" width="256" height="256">
    <properties>
     <property name="friction" value="0.5"/>
     <property name="h" value="4"/>

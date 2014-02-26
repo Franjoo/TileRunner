@@ -12,6 +12,7 @@ import com.tilerunner.gameobjects.world.World;
 import com.tilerunner.input.IGameInput;
 import com.tilerunner.input.KeyboardInput;
 import com.tilerunner.input.gamepads.X360Gamepad;
+import com.tilerunner.ui.ControlUI;
 import com.tilerunner.ui.PlayUI;
 
 /**
@@ -27,8 +28,8 @@ public class PlayController {
     private Player p1;
     private Player p2;
 
-    // ui
-    private PlayUI playUI;
+    // controls UI
+    private ControlUI controlUI;
 
     private CameraManager cameraManager;
 
@@ -42,12 +43,15 @@ public class PlayController {
     private void init() {
 
 
+
         //**** SINGLEPLAYER
         if (PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER) {
             world = new World(this);
             p1 = new Player(world, 1);
 
             IGameInput input = null;
+
+            // DESKTOP
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
 
                 // xbox 360 controller
@@ -57,6 +61,13 @@ public class PlayController {
                     // keyboard
                 else input = new X360Gamepad(controllers.get(0));
             }
+
+            // ANDROID
+            else if(Gdx.app.getType() == Application.ApplicationType.Android){
+                controlUI = new ControlUI();
+                input = controlUI.getListener();
+            }
+
 
 
             p1.setInputController(input);
@@ -68,11 +79,6 @@ public class PlayController {
             world.createEnemies();
             world.createRenderer(PlayScreen.getInstance().getBatch());
             world.setCamera(cameraManager.getCamera_shared());
-
-
-            // ui
-            playUI = new PlayUI();
-
 
             world.getRenderer().setView(cameraManager.getCamera_shared());
 
@@ -135,6 +141,10 @@ public class PlayController {
      */
     public void update(float delta) {
 
+        if(Gdx.app.getType() == Application.ApplicationType.Android){
+            controlUI.update(delta);
+        }
+
         if (PlayScreen.PLAYMODE == PlayScreen.SINGLEPLAYER) {
             p1.getInputController().poll();
             p1.update(delta);
@@ -171,7 +181,7 @@ public class PlayController {
         // platforms
         world.platforms().update(delta);
 
-        // boxes
+        // crates
         world.boxes().update(delta);
 
         // update cameraManager
@@ -194,13 +204,13 @@ public class PlayController {
         return world;
     }
 
-    public PlayUI getPlayUI() {
-        return playUI;
-    }
-
     public Player getPlayer(int i) {
         if (i == 1) return p1;
         return p2;
+    }
+
+    public ControlUI getUI(){
+        return controlUI;
     }
 
     public CameraManager getCameraManager() {

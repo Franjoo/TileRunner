@@ -1,9 +1,7 @@
 package com.tilerunner.gameobjects.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,24 +14,18 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.tilerunner.gameobjects.boxes.Boxes;
+import com.tilerunner.gameobjects.crates.Crates;
 import com.tilerunner.gameobjects.checkpoints.Checkpoints;
 import com.tilerunner.gameobjects.collectibles.Coins;
 import com.tilerunner.gameobjects.decorations.Decoration;
 import com.tilerunner.gameobjects.decorations.Torch;
-import com.tilerunner.gameobjects.enemies.Drone;
 import com.tilerunner.gameobjects.enemies.IEnemy;
-import com.tilerunner.gameobjects.platforms.Platform;
 import com.tilerunner.gameobjects.platforms.Platforms;
 import com.tilerunner.gameobjects.player.Player;
-import com.tilerunner.gameobjects.enemies.Enemy;
-import com.tilerunner.gameobjects.traps.Saw;
-import com.tilerunner.gameobjects.traps.Trap;
 import com.tilerunner.gameobjects.traps.Traps;
 import com.tilerunner.gameobjects.weapons.Bomb;
 import com.tilerunner.gameobjects.weapons.Shiver;
 import com.tilerunner.gameobjects.weapons.poolables.Bullet;
-import com.tilerunner.gameobjects.weapons.MachineGun;
 import com.tilerunner.gameobjects.weapons.poolables.Chunk;
 import com.tilerunner.pathfinding.Pathfinder;
 import com.tilerunner.screens.play.PlayController;
@@ -53,7 +45,7 @@ public class World {
 
     // static finals
     public static final int STEP = 4;
-    public static final int TILESIZE = 64;
+    public static int TILESIZE = 32;
 
     private Detector detector;
     private Pathfinder pathfinder;
@@ -103,7 +95,7 @@ public class World {
     private Checkpoints checkpoints;
     private Coins coins;
     private Platforms platforms;
-    private Boxes boxes;
+    private Crates crates;
 
 
 
@@ -120,7 +112,7 @@ public class World {
         this.playController = playController;
 
         // load tmx map
-        map = new TmxMapLoader().load("maps/playground.tmx");
+        map = new TmxMapLoader().load("maps/playground32.tmx");
 //        map = new TmxMapLoader().load("maps/playground.tmx");
 
         // create collision detector
@@ -134,6 +126,8 @@ public class World {
         tileHeight = Integer.parseInt(map.getProperties().get("tileheight").toString());
         mapWidth = numTilesX * tileWidth;
         mapHeight = numTilesY * tileHeight;
+
+        TILESIZE = tileWidth;
 
         // create pathfinder
         Pathfinder.initialize(detector.getSolids(), tileWidth, tileHeight);
@@ -150,8 +144,8 @@ public class World {
         // platforms
         platforms = new Platforms(map, this);
 
-        // boxes
-        boxes = new Boxes(map, this);
+        // crates
+        crates = new Crates(map, this);
 
         createDecorations();
 
@@ -721,8 +715,8 @@ public class World {
         return platforms;
     }
 
-    public Boxes boxes() {
-        return boxes;
+    public Crates boxes() {
+        return crates;
     }
 
 

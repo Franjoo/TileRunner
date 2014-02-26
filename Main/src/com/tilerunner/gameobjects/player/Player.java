@@ -3,19 +3,16 @@ package com.tilerunner.gameobjects.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.SkeletonBounds;
-import com.tilerunner.gameobjects.boxes.Box;
+import com.tilerunner.gameobjects.crates.Crate;
 import com.tilerunner.gameobjects.checkpoints.Checkpoint;
 import com.tilerunner.gameobjects.platforms.Platform;
-import com.tilerunner.gameobjects.platforms.Platforms;
 import com.tilerunner.gameobjects.traps.Trap;
-import com.tilerunner.gameobjects.traps.Traps;
 import com.tilerunner.gameobjects.world.Detector;
 import com.tilerunner.core.C;
 import com.tilerunner.gameobjects.world.World;
@@ -46,7 +43,7 @@ public class Player extends Creature implements IPlayable {
     // sounds
     private Sound sndJump;
 
-    private final float aJ = 100;
+    private final float aJ = 50;
 
     // mao objects
     private Checkpoint checkpoint;
@@ -75,7 +72,7 @@ public class Player extends Creature implements IPlayable {
     }
 
     public Player(World world, int id) {
-        this("skeleton", "spine/lego_runner/", "blau", 0.8f, world, id);
+        this("skeleton", "spine/lego_runner/", "blau", 0.4f, world, id);
 
 
     }
@@ -84,8 +81,11 @@ public class Player extends Creature implements IPlayable {
     private void init() {
 
         // position
-        this.x = 640;
-        this.y = 10600;
+        this.x = 320;
+        this.y = 5300;
+//        this.x = 640;
+//        this.y = 10600;
+
         // dimension
 //        this.width = 64;
 //        this.height = 64;
@@ -102,10 +102,10 @@ public class Player extends Creature implements IPlayable {
         this.frictionX = 0f;
         this.frictionY = 0;
         // limits
-        this.vX_Max = 15;
-        this.vX_Min = -15;
-        this.vY_Max = 40;
-        this.vY_Min = -40;
+        this.vX_Max = 7;
+        this.vX_Min = -7;
+        this.vY_Max = 20;
+        this.vY_Min = -20;
 
         // detector
         detector = Detector.getInstance();
@@ -195,7 +195,7 @@ public class Player extends Creature implements IPlayable {
 
             // additional jump height
             if (current().equals("jump") && vY >= 0 && input.isA()) {
-                vY += 0.7;
+                vY += 0.5;
             }
 
             // jump start
@@ -203,7 +203,7 @@ public class Player extends Creature implements IPlayable {
                 state.setAnimation(0, "jump", false);
                 state.addAnimation(0, "land", false, 0);
                 sndJump.play();
-                vY += 23;
+                vY += 15;
             }
 
 
@@ -271,7 +271,7 @@ public class Player extends Creature implements IPlayable {
             // platform collision
             setPlatformCollisionPosition(delta);
 
-            // boxes
+            // crates
             setBoxesCollisionPosition();
 
             // check trap collision
@@ -286,16 +286,16 @@ public class Player extends Creature implements IPlayable {
 
     private void setBoxesCollisionPosition() {
         for (int i = 0; i < world.boxes().getBoxes().size; i++) {
-            Box box = world.boxes().getBoxes().get(i);
+            Crate crate = world.boxes().getBoxes().get(i);
 
             boolean onTop = false;
             SkeletonBounds bounds = getSkeletonBounds();
 
             // top
-            if ((box.isHit(bounds.getMinX(), y) && !box.isHit(bounds.getMinX(), y - vY))
-                    || (box.isHit(bounds.getMaxX(), y) && !box.isHit(bounds.getMaxX(), y - vY))) {
+            if ((crate.isHit(bounds.getMinX(), y) && !crate.isHit(bounds.getMinX(), y - vY))
+                    || (crate.isHit(bounds.getMaxX(), y) && !crate.isHit(bounds.getMaxX(), y - vY))) {
 
-                y = box.getY() + box.getHeight() + C.EPSILON;
+                y = crate.getY() + crate.getHeight() + C.EPSILON;
                 vY = 0;
                 hit_bottom = true;
                 onTop = true;
@@ -303,23 +303,23 @@ public class Player extends Creature implements IPlayable {
             }
 
             // right push
-            if (vX > 0 && hit_bottom && !onTop && box.isHit(bounds.getMaxX(), y)) {
-                x -= box.push(vX);
+            if (vX > 0 && hit_bottom && !onTop && crate.isHit(bounds.getMaxX(), y)) {
+                x -= crate.push(vX);
             }
 
             // left push
-            else if (vX < 0 && hit_bottom && !onTop && box.isHit(bounds.getMinX(), y)) {
-                x -= box.push(vX);
+            else if (vX < 0 && hit_bottom && !onTop && crate.isHit(bounds.getMinX(), y)) {
+                x -= crate.push(vX);
             }
 
             // right air collision
-            if (!hit_bottom && box.isHit(bounds.getMaxX(), y)) {
-                x = box.getX() + x - bounds.getMaxX();
+            if (!hit_bottom && crate.isHit(bounds.getMaxX(), y)) {
+                x = crate.getX() + x - bounds.getMaxX();
             }
 
             // left air collision
-            else if (!hit_bottom && box.isHit(bounds.getMinX(), y)) {
-                x = box.getX() + box.getWidth() + x - bounds.getMinX();
+            else if (!hit_bottom && crate.isHit(bounds.getMinX(), y)) {
+                x = crate.getX() + crate.getWidth() + x - bounds.getMinX();
             }
 
 

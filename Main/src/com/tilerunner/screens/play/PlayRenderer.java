@@ -1,5 +1,6 @@
 package com.tilerunner.screens.play;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -108,7 +109,7 @@ public class PlayRenderer {
         playController.getWorld().renderGameLayer(batch);
         //platforms
         playController.getWorld().platforms().render(batch);
-        // boxes
+        // crates
         playController.getWorld().boxes().render(batch);
 
 
@@ -140,6 +141,11 @@ public class PlayRenderer {
         // coins
         playController.getWorld().coins().render(batch);
 
+
+        // controll UI
+        if(Gdx.app.getType() == Application.ApplicationType.Android){
+            playController.getUI().render();
+        }
 
     }
 

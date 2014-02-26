@@ -67,7 +67,7 @@ public class AnimationStateTest extends ApplicationAdapter {
 		skeleton.setX(250);
 		skeleton.setY(20);
 
-		bounds = new SkeletonBounds(); // Convenience class to do hit detection with bounding boxes.
+		bounds = new SkeletonBounds(); // Convenience class to do hit detection with bounding crates.
 
 		AnimationStateData stateData = new AnimationStateData(skeletonData); // Defines mixing (crossfading) between animations.
 		stateData.setMix("walk", "jump", 0.2f);

@@ -12,7 +12,7 @@ public class DesktopStarter {
     private static final String VERSION = "v0.001";
 
     private static final int FRAME_WIDTH = 1280;
-    private static final int FRAME_HEIGHT = FRAME_WIDTH / 16 * 8;
+    private static final int FRAME_HEIGHT = 720;
 
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
@@ -21,6 +21,7 @@ public class DesktopStarter {
         cfg.width = FRAME_WIDTH;
         cfg.height = FRAME_HEIGHT;
         cfg.vSyncEnabled = true;
+
 
 
 

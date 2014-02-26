@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="400" height="300" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="ts_runner32" tilewidth="32" tileheight="32">
+  <image source="tilesets/ts_runner32.png" width="512" height="512"/>
+ </tileset>
+ <layer name="$c$gl" width="400" height="300">
+  <data encoding="base64" compression="zlib">
+   eJzt3cENgDAMBEHov2lKQDrAic2MlBZuH4jkOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4L/OogPALFX90BOAWfQDgIQtByChHwAk9AOAhH4AkNAPABL6AUBCPwBIdOmHf0oA9tJld/UDYC/dd1c/ANawuwAk9AOAhH4AkKjuh7t7AWao3GN3vwPMYY8BSOgHAAn9ACDhmwIAiVXvn1ccAL6zeuM1BKAn+wzAW7QCgDs6AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8dQFvmAEt
+  </data>
+ </layer>
+ <objectgroup draworder="topdown" name="crates" width="400" height="300">
+  <properties>
+   <property name="crates" value=""/>
+  </properties>
+  <object type="crate" x="544" y="4224" width="128" height="128">
+   <properties>
+    <property name="h" value="4"/>
+    <property name="w" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

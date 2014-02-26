@@ -25,7 +25,7 @@ public class Main implements ApplicationListener {
     private static final String TAG = Main.class.getSimpleName();
 
     // debug bools
-    private static final boolean FPS_LOGGING = false;
+    private static final boolean FPS_LOGGING = true;
 
     // statsdisplay
     private StatsDisplay stats;
@@ -39,6 +39,8 @@ public class Main implements ApplicationListener {
         gameController = new GameController();
         fpsLogger = new FPSLogger();
         stats = new StatsDisplay();
+
+        resize(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class Main implements ApplicationListener {
         // log fps
         if (FPS_LOGGING) fpsLogger.log();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.F6)){
+        if (Gdx.input.isKeyPressed(Input.Keys.F6)) {
             create();
         }
     }

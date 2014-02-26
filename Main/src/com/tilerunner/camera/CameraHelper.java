@@ -39,7 +39,7 @@ public class CameraHelper {
     public CameraHelper() {
 
 //        position = new Vector2(0, 0);
-        zoom = 2.6f;
+        zoom = 1f;
 
         targets = new IPlayable[2];
     }
