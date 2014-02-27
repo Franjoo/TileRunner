@@ -54,4 +54,9 @@ public abstract class AbstractCollectionObject implements ICollectionObject {
         // contains
         return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
     }
+
+    public boolean isHit(float x, float y, float width, float height){
+        // overlaps
+        return this.x < x + width && this.x + this.width > x && this.y < y + height && this.y + this.height > y;
+    }
 }

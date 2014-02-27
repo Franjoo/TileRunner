@@ -42,8 +42,8 @@ public class Checkpoints {
                     if (type.equals("checkpoint")) {
                         float x = Integer.parseInt(p.get("x").toString());
                         float y = Integer.parseInt(p.get("y").toString());
-                        float w = Integer.parseInt(p.get("w").toString()) * World.TILESIZE;
-                        float h = Integer.parseInt(p.get("h").toString()) * World.TILESIZE;
+                        float w = Integer.parseInt(p.get("w").toString()) * World.TS;
+                        float h = Integer.parseInt(p.get("h").toString()) * World.TS;
 
                         Checkpoint c = new Checkpoint(x, y, w, h);
                         checkpoints.add(c);

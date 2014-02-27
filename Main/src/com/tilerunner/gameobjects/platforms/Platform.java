@@ -2,6 +2,7 @@ package com.tilerunner.gameobjects.platforms;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.tilerunner.gameobjects.AbstractCollectionObject;
 import com.tilerunner.gameobjects.ICollectionObject;
 
@@ -67,6 +68,16 @@ public class Platform extends AbstractCollectionObject {
     public boolean isHit(float x, float y) {
         // contains
         return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
+    }
+
+    public boolean isHit(Rectangle r){
+        // overlaps
+        return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
+    }
+
+    public boolean isHit(float x, float y, float width, float height){
+        // overlaps
+        return this.x < x + width && this.x + this.width > x && this.y < y + height && this.y + this.height > y;
     }
 
     public float getX() {

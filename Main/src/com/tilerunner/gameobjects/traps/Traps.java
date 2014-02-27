@@ -10,10 +10,6 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.FloatArray;
-import com.esotericsoftware.spine.SkeletonBounds;
-import com.tilerunner.gameobjects.collectibles.Coin;
-import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.World;
 
 /**
@@ -49,8 +45,8 @@ public class Traps {
                     if (type.equals("saw")) {
                         float x = Integer.parseInt(p.get("x").toString());
                         float y = Integer.parseInt(p.get("y").toString());
-                        float w = Integer.parseInt(p.get("w").toString()) * World.TILESIZE;
-                        float h = Integer.parseInt(p.get("h").toString()) * World.TILESIZE;
+                        float w = Integer.parseInt(p.get("w").toString()) * World.TS;
+                        float h = Integer.parseInt(p.get("h").toString()) * World.TS;
 //                        float vr = Float.parseFloat(p.get("vr").toString());
 
                         Saw saw = new Saw(x, y, w, h, 180, new TextureRegion(new Texture(Gdx.files.internal("saw.png"))));

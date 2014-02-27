@@ -112,7 +112,7 @@ public abstract class Creature extends GameObject {
         skeletonRenderer.draw(batch, skeleton);
         batch.end();
 
-//        skeletonDebugRenderer.draw(skeleton);
+        skeletonDebugRenderer.draw(skeleton);
 
     }
 

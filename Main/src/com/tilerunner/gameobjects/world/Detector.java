@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -215,8 +216,35 @@ public final class Detector {
     }
 
     public boolean isStep(float x, float y) {
-        return getStep(x,y) != null;
+        return getStep(x, y) != null;
     }
+
+    public boolean containsSolid(Rectangle r) {
+        return this.isSolid(r.x, r.y, r.width, r.height);
+    }
+
+    public boolean isSolid(final float x, final float y, final float width, final float height) {
+
+        // divisor
+        final int numWidth = (int) Math.ceil(width / World.TS);
+        final int numHeight = (int) Math.ceil(height / World.TS);
+
+        // factor
+        final float dw = width / numWidth;
+        final float dh = height / numHeight;
+
+        // check intersection
+        for (int w = 0; w <= numWidth; w++) {
+            for (int h = 0; h <= numHeight; h++) {
+                if (isSolid(x + w * dw, y + h * dh)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     public static class Step {
 
@@ -224,11 +252,11 @@ public final class Detector {
         public int y2;
         public float m;
 
-        public Step(final int y1,final int y2) {
+        public Step(final int y1, final int y2) {
             this.y1 = y1;
             this.y2 = y2;
 
-            m = ((float) (this.y2 - this.y1) * World.STEP) / World.TILESIZE;
+            m = ((float) (this.y2 - this.y1) * World.STEP) / World.TS;
         }
 
         @Override

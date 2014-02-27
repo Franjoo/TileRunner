@@ -38,15 +38,15 @@ public class Crate extends AbstractCollectionObject {
     public void update(float delta) {
 
         falls = true;
-        final int n = (int) (width / World.TILESIZE);
+        final int n = (int) (width / World.TS);
         for (int i = 0; i < n; i++) {
-            if ((!detector.isSolid(this.x + i * World.TILESIZE, y - C.EPSILON)
-                    && !detector.isStep(this.x + i * World.TILESIZE, y - C.EPSILON))) {
+            if ((!detector.isSolid(this.x + i * World.TS, y - C.EPSILON)
+                    && !detector.isStep(this.x + i * World.TS, y - C.EPSILON))) {
 
                 System.out.println("falls");
             } else {
 
-                y = (int) ((y - vY) / World.TILESIZE) * World.TILESIZE;
+                y = (int) ((y - vY) / World.TS) * World.TS;
                 falls = false;
                 vY = 0;
                 break;
@@ -76,25 +76,25 @@ public class Crate extends AbstractCollectionObject {
     public float push(float v) {
         float diff = v * friction;
 
-        final int n = (int) (height / World.TILESIZE);
+        final int n = (int) (height / World.TS);
         for (int i = 0; i < n; i++) {
 
             // right push
-            if (v > 0 && (detector.isSolid(this.x + width + diff, y + i * World.TILESIZE)
-                    || detector.isStep(this.x + width + diff, y + i * World.TILESIZE)
+            if (v > 0 && (detector.isSolid(this.x + width + diff, y + i * World.TS)
+                    || detector.isStep(this.x + width + diff, y + i * World.TS)
                     || detector.isStep(this.x + width + diff, y - C.EPSILON))) {
 
-                x = (int) ((x + diff) / World.TILESIZE) * World.TILESIZE;
+                x = (int) ((x + diff) / World.TS) * World.TS;
 
                 return v;
             }
 
             // left push
-            else if (v < 0 && (detector.isSolid(this.x + diff, y + i * World.TILESIZE)
-                    || detector.isStep(this.x + diff, y + i * World.TILESIZE)
+            else if (v < 0 && (detector.isSolid(this.x + diff, y + i * World.TS)
+                    || detector.isStep(this.x + diff, y + i * World.TS)
                     || detector.isStep(this.x + diff, y - C.EPSILON))) {
 
-                x = (int) ((x - diff) / World.TILESIZE) * World.TILESIZE;
+                x = (int) ((x - diff) / World.TS) * World.TS;
 
                 return v;
             }

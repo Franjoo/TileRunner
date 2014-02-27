@@ -45,7 +45,7 @@ public class World {
 
     // static finals
     public static final int STEP = 4;
-    public static int TILESIZE = 32;
+    public static int TS = 32;
 
     private Detector detector;
     private Pathfinder pathfinder;
@@ -127,7 +127,7 @@ public class World {
         mapWidth = numTilesX * tileWidth;
         mapHeight = numTilesY * tileHeight;
 
-        TILESIZE = tileWidth;
+        TS = tileWidth;
 
         // create pathfinder
         Pathfinder.initialize(detector.getSolids(), tileWidth, tileHeight);
@@ -245,8 +245,8 @@ public class World {
 //                    if (o.getProperties().containsKey("saw")) {
 //                        float x = Integer.parseInt(p.get("x").toString());
 //                        float y = Integer.parseInt(p.get("y").toString());
-//                        float w = Integer.parseInt(p.get("w").toString()) * TILESIZE;
-//                        float h = Integer.parseInt(p.get("h").toString()) * TILESIZE;
+//                        float w = Integer.parseInt(p.get("w").toString()) * TS;
+//                        float h = Integer.parseInt(p.get("h").toString()) * TS;
 ////                        float vr = Float.parseFloat(p.get("vr").toString());
 //
 //                        Saw saw = new Saw(x, y, w, h, 20, new TextureRegion(new Texture(Gdx.files.internal("saw.png"))));

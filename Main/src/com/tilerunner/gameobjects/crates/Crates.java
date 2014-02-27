@@ -41,8 +41,8 @@ public class Crates {
                     if (type.equals("crate")) {
                         float x = Float.parseFloat(p.get("x").toString());
                         float y = Float.parseFloat(p.get("y").toString());
-                        float w = Integer.parseInt(p.get("w").toString()) * World.TILESIZE;
-                        float h = Integer.parseInt(p.get("h").toString()) * World.TILESIZE;
+                        float w = Integer.parseInt(p.get("w").toString()) * World.TS;
+                        float h = Integer.parseInt(p.get("h").toString()) * World.TS;
 
                         Crate crate = new Crate(x, y, w, h);
                         boxes.add(crate);

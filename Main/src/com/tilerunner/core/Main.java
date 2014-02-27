@@ -40,7 +40,8 @@ public class Main implements ApplicationListener {
         fpsLogger = new FPSLogger();
         stats = new StatsDisplay();
 
-        resize(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        // resize
+        Gdx.graphics.setDisplayMode(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, false);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class Main implements ApplicationListener {
         if (FPS_LOGGING) fpsLogger.log();
 
         if (Gdx.input.isKeyPressed(Input.Keys.F6)) {
+            Gdx.graphics.setDisplayMode(Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2, false);
             create();
         }
     }

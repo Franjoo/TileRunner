@@ -7,9 +7,6 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
-import com.tilerunner.gameobjects.ICollectionObject;
-import com.tilerunner.gameobjects.ObjectCollection;
-import com.tilerunner.gameobjects.traps.Trap;
 import com.tilerunner.gameobjects.world.World;
 
 /**
@@ -44,12 +41,12 @@ public class Platforms {
                     if (type.equals("platform")) {
                         float x1 = Integer.parseInt(p.get("x").toString());
                         float y1 = Integer.parseInt(p.get("y").toString());
-                        float x2 = x1 + Integer.parseInt(p.get("p").toString().split(" ")[0]) * World.TILESIZE;
-                        float y2 = y1 + Integer.parseInt(p.get("p").toString().split(" ")[1]) * World.TILESIZE;
+                        float x2 = x1 + Integer.parseInt(p.get("p").toString().split(" ")[0]) * World.TS;
+                        float y2 = y1 + Integer.parseInt(p.get("p").toString().split(" ")[1]) * World.TS;
 
-                        float w = Integer.parseInt(p.get("w").toString()) * World.TILESIZE;
-                        float h = Integer.parseInt(p.get("h").toString()) * World.TILESIZE;
-                        float v = Integer.parseInt(p.get("v").toString()) * World.TILESIZE; // pixel per second
+                        float w = Integer.parseInt(p.get("w").toString()) * World.TS;
+                        float h = Integer.parseInt(p.get("h").toString()) * World.TS;
+                        float v = Integer.parseInt(p.get("v").toString()) * World.TS; // pixel per second
 
                         Platform platform = new Platform(x1, y1, x2, y2, w, h,v);
                         platforms.add(platform);
