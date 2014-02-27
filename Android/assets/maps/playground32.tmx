@@ -2,10 +2,90 @@
 <map version="1.0" orientation="orthogonal" width="400" height="300" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="ts_runner32" tilewidth="32" tileheight="32">
   <image source="tilesets/ts_runner32.png" width="512" height="512"/>
+  <tile id="3">
+   <properties>
+    <property name="step" value="8 0"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="step" value="8 4"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="step" value="4 0"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="step" value="8 6"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="step" value="6 4"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="step" value="4 2"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="step" value="2 0"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="step" value="16 14"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="step" value="8 7"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="step" value="7 6"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="step" value="6 5"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="step" value="5 4"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="step" value="4 3"/>
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="step" value="3 2"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="step" value="2 1"/>
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="step" value="1 0"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="$c$gl" width="400" height="300">
   <data encoding="base64" compression="zlib">
-   eJzt3cENgDAMBEHov2lKQDrAic2MlBZuH4jkOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4L/OogPALFX90BOAWfQDgIQtByChHwAk9AOAhH4AkNAPABL6AUBCPwBIdOmHf0oA9tJld/UDYC/dd1c/ANawuwAk9AOAhH4AkKjuh7t7AWao3GN3vwPMYY8BSOgHAAn9ACDhmwIAiVXvn1ccAL6zeuM1BKAn+wzAW7QCgDs6AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8dQFvmAEt
+   eJzt3ElO61AQhlEzgDS7oc/yvDSWRglPg0iK61tuzpH+6ZOZ1IeBl2EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID9eug0ALalVz/0BGBb9AOADLccgAz9ACBDPwDI0A8AMvQDgAz9ACBDPwDI0A8AMvQDgAz9ACBjK/3wmSoAfW3lbp6H4esUO8YOMf0AmJe7CUBGz37EO8IY7whjvCOM8Y4wrvHnTD6fGGDS81Zt4bbqB8DErbqPBgBM3Ln76AfAxJ0DIOPa982PsafKhwJg8Xr9Prhih9gxdhp+/vYLgIaqb7yeAKxT9U3XE4B1qr7hS5qeANyu+mYveXoC8LvqG72ntdbjeeZ6dmD9qm/qntZaz370/toAKrX4THf90A+A6p60ph8ANXr3pLXq59EPgMncPWmt+nn0A+C61j1prfp59ANgnS7RtM/YR+w99hZ7jb3Enm/o3X/pB8A2/dWXW/6NqncrANZNPwDI0A8AMvQDgAz9ACBDIwDI0A8AMvQDYN/OwzCeYsfYIbaE/z8PQJ0WXdAPgFpz3u4lDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACghW/AUi3J
   </data>
  </layer>
  <objectgroup draworder="topdown" name="crates" width="400" height="300">
@@ -16,6 +96,131 @@
    <properties>
     <property name="h" value="4"/>
     <property name="w" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="Coins" width="400" height="300">
+  <properties>
+   <property name="coins" value=""/>
+  </properties>
+  <object type="red" x="1040" y="4080"/>
+  <object type="red" x="1104" y="4080"/>
+  <object type="red" x="1168" y="4080"/>
+  <object type="red" x="1232" y="4080"/>
+  <object type="red" x="1296" y="4080"/>
+  <object type="red" x="1360" y="4080"/>
+  <object type="white" x="1072" y="4016"/>
+  <object type="white" x="1136" y="4016"/>
+  <object type="white" x="1200" y="4016"/>
+  <object type="white" x="1264" y="4016"/>
+  <object type="white" x="1328" y="4016"/>
+  <object type="red" x="1712" y="4048"/>
+  <object type="red" x="1712" y="3984"/>
+  <object type="red" x="1712" y="3920"/>
+  <object type="red" x="1936" y="4048"/>
+  <object type="red" x="1936" y="3984"/>
+  <object type="red" x="1936" y="3920"/>
+  <object type="yellow" x="2256" y="3952"/>
+  <object type="yellow" x="2320" y="3984"/>
+  <object type="yellow" x="2384" y="4016"/>
+  <object type="yellow" x="2448" y="4048"/>
+  <object type="yellow" x="2512" y="4080"/>
+  <object type="yellow" x="2576" y="4112"/>
+  <object type="yellow" x="2736" y="4112"/>
+  <object type="yellow" x="2896" y="4112"/>
+  <object type="yellow" x="3056" y="4112"/>
+  <object type="yellow" x="4368" y="4656"/>
+  <object type="yellow" x="4400" y="4656"/>
+  <object type="yellow" x="4432" y="4656"/>
+  <object type="yellow" x="4464" y="4656"/>
+  <object type="yellow" x="4496" y="4656"/>
+  <object type="yellow" x="4528" y="4656"/>
+  <object type="yellow" x="4560" y="4656"/>
+  <object type="yellow" x="4560" y="4688"/>
+  <object type="yellow" x="4528" y="4688"/>
+  <object type="yellow" x="4496" y="4688"/>
+  <object type="yellow" x="4464" y="4688"/>
+  <object type="yellow" x="4432" y="4688"/>
+  <object type="yellow" x="4400" y="4688"/>
+  <object type="yellow" x="4368" y="4688"/>
+  <object type="yellow" x="4368" y="4720"/>
+  <object type="yellow" x="4400" y="4720"/>
+  <object type="yellow" x="4432" y="4720"/>
+  <object type="yellow" x="4464" y="4720"/>
+  <object type="yellow" x="4496" y="4720"/>
+  <object type="yellow" x="4528" y="4720"/>
+  <object type="yellow" x="4560" y="4720"/>
+  <object type="yellow" x="4560" y="4752"/>
+  <object type="yellow" x="4528" y="4752"/>
+  <object type="yellow" x="4496" y="4752"/>
+  <object type="yellow" x="4464" y="4752"/>
+  <object type="yellow" x="4432" y="4752"/>
+  <object type="yellow" x="4400" y="4752"/>
+  <object type="yellow" x="4368" y="4752"/>
+  <object type="yellow" x="4208" y="4528"/>
+  <object type="yellow" x="4208" y="4624"/>
+  <object type="yellow" x="4208" y="4720"/>
+  <object type="yellow" x="4208" y="4816"/>
+  <object type="yellow" x="4208" y="4912"/>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="checkpoints" width="400" height="300">
+  <properties>
+   <property name="checkpoints" value=""/>
+  </properties>
+  <object type="checkpoint" x="1760" y="3936" width="128" height="128">
+   <properties>
+    <property name="h" value="4"/>
+    <property name="w" value="4"/>
+   </properties>
+  </object>
+  <object type="checkpoint" x="224" y="4224" width="320" height="128">
+   <properties>
+    <property name="h" value="4"/>
+    <property name="w" value="10"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="traps" width="400" height="300">
+  <properties>
+   <property name="traps" value=""/>
+  </properties>
+  <object type="saw" x="2360" y="4144" width="160" height="160">
+   <properties>
+    <property name="h" value="5"/>
+    <property name="w" value="5"/>
+   </properties>
+  </object>
+  <object type="saw" x="2816" y="4560" width="160" height="160">
+   <properties>
+    <property name="h" value="5"/>
+    <property name="w" value="5"/>
+   </properties>
+  </object>
+  <object type="saw" x="3712" y="4656" width="160" height="160">
+   <properties>
+    <property name="h" value="5"/>
+    <property name="w" value="5"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup draworder="topdown" name="platforms" width="400" height="300">
+  <properties>
+   <property name="platforms" value=""/>
+  </properties>
+  <object type="platform" x="2912" y="4512" width="160" height="32">
+   <properties>
+    <property name="h" value="1"/>
+    <property name="p" value="15 0"/>
+    <property name="v" value="3"/>
+    <property name="w" value="5"/>
+   </properties>
+  </object>
+  <object type="platform" x="4064" y="4512" width="288" height="32">
+   <properties>
+    <property name="h" value="1"/>
+    <property name="p" value="0 -15"/>
+    <property name="v" value="4"/>
+    <property name="w" value="9"/>
    </properties>
   </object>
  </objectgroup>

@@ -512,8 +512,8 @@ public class Player extends Creature implements IPlayable {
             Detector.Step step = detector.getStep(x, y);
             if (step != null) {
 
-                float _y = y % 64.0f;
-                float _x = x % 64.0f;
+                float _y = y % World.TILESIZE;
+                float _x = x % World.TILESIZE;
 
                 if (_y <= step.m * _x + step.y1 * World.STEP) {
 

@@ -2,6 +2,7 @@ package com.tilerunner.gameobjects.collectibles;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilerunner.gameobjects.player.Player;
 import com.tilerunner.gameobjects.world.World;
 
@@ -17,7 +18,6 @@ public class Coin {
     private final float friction;
     private final float acceleration;
     private float vx, vy;
-    private boolean follows;
     private Player target;
 
     // animation
@@ -37,7 +37,6 @@ public class Coin {
         acceleration = 130;
         friction = 0.95f;
 
-//        time = (float) (Math.random() * animation.animationDuration);
     }
 
     public Coin(float x, float y, World world, Animation animation, float acceleration, float friction) {
@@ -48,7 +47,6 @@ public class Coin {
         this.acceleration = acceleration;
         this.friction = friction;
 
-//        time = (float) (Math.random() * animation.animationDuration);
     }
 
     public void update(float delta) {
@@ -59,14 +57,13 @@ public class Coin {
             target = null;
         }
 
-        // distance to player
+        // has no target
         else if (target == null) {
 
             float dist = Float.MAX_VALUE;
 
             for (int i = 0; i < world.getPlayers().size; i++) {
                 Player p = world.getPlayers().get(i);
-
 
                 // root bone position of player
                 final float px = p.getBone("root").getWorldX() + p.getX();
@@ -77,7 +74,8 @@ public class Coin {
                 float y_d = py - y;
                 float distance = (float) Math.sqrt(x_d * x_d + y_d * y_d);
 
-                if (distance <= dist && distance <= 160) {
+                // check distance
+                if (distance <= dist && distance <= 80) {
                     dist = distance;
                     target = p;
 
@@ -87,7 +85,8 @@ public class Coin {
                         y_d /= distance;
                     }
 
-                    if (distance <= 160) {
+                    // accelerate to player
+                    if (distance <= 80) {
                         target = p;
 
                         vx += x_d * acceleration * delta;
@@ -100,7 +99,11 @@ public class Coin {
                 }
             }
 
-        } else {
+        }
+
+        // has already target
+        else {
+
             Player p = target;
 
             // root bone position of player
@@ -112,33 +115,30 @@ public class Coin {
             float y_d = py - y;
             float distance = (float) Math.sqrt(x_d * x_d + y_d * y_d);
 
-
             // normalize
             if (distance != 0) {
                 x_d /= distance;
                 y_d /= distance;
             }
 
-
+            // update velocity
             vx += x_d * acceleration * delta;
             vy += y_d * acceleration * delta;
-
             vx *= friction;
             vy *= friction;
 
+            // update position
             x += vx;
             y += vy;
         }
 
-        // update position
-//        if (!target.isWafting()) {
-//
-//        }
     }
 
 
     public void draw(SpriteBatch batch) {
-        batch.draw(animation.getKeyFrame(time), x, y);
+        // draw centered
+        TextureRegion r = animation.getKeyFrame(time);
+        batch.draw(r, x - r.getRegionWidth() / 2, y - r.getRegionHeight() / 2);
     }
 
     public float getX() {

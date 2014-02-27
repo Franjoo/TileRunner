@@ -1,5 +1,6 @@
 package com.tilerunner.camera;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,7 +23,7 @@ public class CameraHelper {
     private float x;
     private float y;
 
-    private float zoom;
+    private float zoom = 1;
     private IPlayable target;
     private IPlayable[] targets;
 
@@ -38,8 +39,9 @@ public class CameraHelper {
 
     public CameraHelper() {
 
-//        position = new Vector2(0, 0);
-        zoom = 1f;
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            zoom = 1.3f;
+        }
 
         targets = new IPlayable[2];
     }
@@ -86,7 +88,7 @@ public class CameraHelper {
 
 //            setZoom(zoom);
             if (zoom > MAX_ZOOM_OUT) zoom = MAX_ZOOM_OUT;
-            if (zoom < MAX_ZOOM_OUT/2) zoom = MAX_ZOOM_OUT/2;
+            if (zoom < MAX_ZOOM_OUT / 2) zoom = MAX_ZOOM_OUT / 2;
 
 
         }
@@ -123,11 +125,11 @@ public class CameraHelper {
 //        position.set(x, y);
     }
 
-    public float getX(){
+    public float getX() {
         return x;
     }
 
-    public float getY(){
+    public float getY() {
         return y;
     }
 
@@ -178,7 +180,7 @@ public class CameraHelper {
 
     public void applyTo(OrthographicCamera camera) {
 
-        camera.position.set(x,y,0);
+        camera.position.set(x, y, 0);
 
         camera.zoom = zoom;
         camera.update();
