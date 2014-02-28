@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.tilerunner.input.IGameInput;
 
@@ -29,6 +31,9 @@ public class ControlUI {
     private Button btn_A;
     private Button btn_B;
     private Button btn_X;
+
+    // touchpad
+    private Touchpad touchpad;
 
     // button bounds
     private Rectangle rec_left;
@@ -61,7 +66,10 @@ public class ControlUI {
         skin.add("A", new Texture("ui/A.png"));
         skin.add("B", new Texture("ui/B.png"));
         skin.add("X", new Texture("ui/X.png"));
+        skin.add("joystick_bg", new Texture("ui/joystick_bg.png"));
+        skin.add("joystick_knob", new Texture("ui/joystick_knob.png"));
 
+        // buttons
         btn_left = new Button(skin.getDrawable("left"), skin.getDrawable("left"));
         btn_right = new Button(skin.getDrawable("right"), skin.getDrawable("right"));
         btn_A = new Button(skin.getDrawable("A"), skin.getDrawable("A"));
@@ -86,6 +94,14 @@ public class ControlUI {
         btn_X.setPosition(Gdx.graphics.getWidth() - 1.5f * btn_A.getWidth() - 1.5f * btn_X.getWidth(), btn_left.getHeight() / 2);
         btn_B.setPosition(Gdx.graphics.getWidth() - 1.5f * btn_B.getWidth(), btn_B.getHeight() / 2 + 1.5f * btn_A.getHeight());
 
+        // touchpad
+        Touchpad.TouchpadStyle style = new Touchpad.TouchpadStyle();
+        Drawable joystickBG = skin.getDrawable("joystick_bg");
+        Drawable joystickKnob = skin.getDrawable("joystick_knob");
+        style.background = joystickBG;
+        style.knob = joystickKnob;
+        touchpad = new Touchpad(10, style);
+        touchpad.setBounds(15, 75, 120, 120);
 
         // add actors
         stage.addActor(btn_left);
@@ -93,6 +109,7 @@ public class ControlUI {
         stage.addActor(btn_A);
         stage.addActor(btn_B);
         stage.addActor(btn_X);
+//        stage.addActor(touchpad);
 
     }
 

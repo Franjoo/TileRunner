@@ -507,7 +507,10 @@ public class Player extends Creature implements IPlayable {
 
     @Override
     public void render(SpriteBatch batch) {
-//        super.render(batch);
+        skeleton.setX(x + width/2);
+        super.render(batch);
+
+
         batch.begin();
         batch.draw(boundsTexture, x, y);
         batch.end();
@@ -567,25 +570,80 @@ public class Player extends Creature implements IPlayable {
 
         // left
         if (vX < 0) {
-            if (detector.isSolid(x, y - vY, width, height)) {
+
+            if (detector.isStep(x + width / 2, y - vY) && detector.isSolid(x, y + 10)) {
+
+                System.out.println("matches");
                 vX = 0;
                 hit_left = true;
                 x = (int) (x / World.TS) * World.TS + World.TS + C.EPSILON;
+
+            } else if (detector.isStep(x + width / 2, y + 2) && !detector.isStep(x + width / 2, y)) {
+                y += 2;
+            }
+//
+
+            else if ((!detector.isStep(x + width / 2, y - vY) && detector.isSolid(x, y - vY, width, height))) {
+
+                // (detector.isStep(x + width / 2, y - vY) && detector.isSolid(x, y - vY + 10, width, height))
+
+                vX = 0;
+                hit_left = true;
+                x = (int) (x / World.TS) * World.TS + World.TS + C.EPSILON;
+
+                System.out.println("left solid");
             }
         }
 
         // right
         else if (vX > 0) {
-            if (detector.isSolid(x, y - vY, width, height)) {
+
+            if (detector.isStep(x + width / 2, y - vY) && detector.isSolid(x + width, y + 10)) {
+
+
                 vX = 0;
                 hit_right = true;
                 x = (int) ((x + width) / World.TS) * World.TS - C.EPSILON - width;
+
+            }
+
+            // solid to step
+            else if (detector.isStep(x + width / 2, y + 2) && !detector.isStep(x + width / 2, y)) {
+                y += 2;
+
+            } else if ((!detector.isStep(x + width / 2, y - vY) && detector.isSolid(x, y - vY, width, height))) {
+                //detector.isStep(x + width / 2, y - vY) && detector.isSolid(x, y - vY + vY, width, height)
+
+                vX = 0;
+                hit_right = true;
+                x = (int) ((x + width) / World.TS) * World.TS - C.EPSILON - width;
+
+                System.out.println("right solid");
+
             }
         }
 
         // bottom
         if (vY < 0) {
-            if (detector.isSolid(x - vX, y, width, height)) {
+
+            // step
+            Detector.Step step = detector.getStep(x + width / 2, y);
+            if (step != null) {
+
+                float _y = y % World.TS;
+                float _x = (x + width / 2) % World.TS;
+
+                if (_y <= step.m * _x + step.y1 * World.STEP) {
+
+                    y = (int) (y / world.tileHeight) * world.tileHeight + (step.m * _x + step.y1 * World.STEP) + C.EPSILON + 1;
+
+                    hit_bottom = true;
+                    vY = 0;
+                }
+            }
+
+            // solid
+            else if (detector.isSolid(x - vX, y, width, height)) {
                 vY = 0;
                 hit_bottom = true;
                 y = (int) (y / world.tileHeight) * world.tileHeight + world.tileHeight + C.EPSILON;
@@ -844,8 +902,8 @@ public class Player extends Creature implements IPlayable {
             // bottom
             if (vY < 0) {
 
-                if (platform.isHit(x, y)) {
-                    y = platform.getY() + platform.getHeight();
+                if (platform.isHit(x, y, width,height)) {
+                    y = platform.getY() + platform.getHeight() + C.EPSILON;
                     x += platform.getVx() * delta;
                     isOnPlatform = true;
                     hit_bottom = true;
